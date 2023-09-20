@@ -16,8 +16,6 @@ function install() {
 
     cd $prev_dir
 
-
-
     echo "Adding OS161 dependencies to PATH..."
     echo "PATH=$HOME/tools/os161/bin:$HOME/tools/sys161/bin:$PATH >> $HOME/.bashrc"
 }

@@ -27,9 +27,7 @@ RUN apt-get update && apt-get -y install \
 ARG UID=1000
 ARG GID=1000
 
-# You can change this if you want
 ENV USERNAME=osdev
-
 ENV HOME=/home/$USERNAME
 RUN groupadd --gid $GID $USERNAME \
     && useradd -s /bin/bash --uid $UID --gid $GID -m $USERNAME && \

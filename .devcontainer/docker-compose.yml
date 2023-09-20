@@ -6,12 +6,10 @@ services:
       dockerfile: Dockerfile
     volumes:
       - type: bind
-        source: ~/os161 # CHANGE THIS (SEE README)
+        source: ${LOCAL_OS161_PATH}
         target: /workspace/os161/
-      - os161_dep:/home/osdev
-
+      - osdev_home:/home/osdev
     command: sleep infinity
-
 volumes:
-  os161_dep:
+  osdev_home:
     
