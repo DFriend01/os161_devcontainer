@@ -7,10 +7,10 @@ echo "Setting up devcontainer"
 function install() {
     echo "Installing OS161 Dependencies..."
     prev_dir=$(pwd)
-    cd $HOME
+    cd $WORKSPACE_DIR/scripts
     bash ./cs161-ubuntu-darwin.sh
 
-    echo "Linking GDB Dependency"
+    echo "Linking GDB Alias"
     cd $HOME/tools/os161/bin
     ln -s mips-harvard-os161-gdb os161-gdb
 
@@ -28,5 +28,3 @@ fi
 
 source $HOME/.bashrc
 echo "Done setup!"
-
-

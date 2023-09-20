@@ -13,9 +13,9 @@ MIRROR="http://www.ece.ubc.ca/~os161/download"
 #echo '*** Installing Ubuntu packages ***'
 #sudo apt-get -y install bmake ncurses-dev libmpc-dev
 
+mkdir -p $HOME/tools/os161/bin
+mkdir -p $HOME/tools/sys161/bin
 cd ~/tools
-mkdir os161 os161/bin
-mkdir sys161 sys161/bin
 
 echo '*** Downloading OS/161 toolchain ***'
 wget $MIRROR/$BINUTILS161.tar.gz
