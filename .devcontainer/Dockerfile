@@ -2,22 +2,26 @@
 FROM ubuntu:18.04
 
 # Install dependencies. Add any extra dependencies here.
+# Remove apt cache to reduce the bloat of image size.
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get -y install \
-    bash-completion \
-    bmake \
-    cmake \
-    cscope \
-    build-essential \
-    emacs \
-    gdb \
-    git \
-    libmpc-dev \
-    ncurses-dev \
-    sudo \
-    tmux \
-    vim \
-    wget
+        bash-completion \
+        bmake \
+        cmake \
+        cscope \
+        build-essential \
+        emacs \
+        gdb \
+        git \
+        libmpc-dev \
+        ncurses-dev \
+        sudo \
+        tmux \
+        vim \
+        wget \    
+    && apt-get autoremove -y \
+    && apt-get clean -y \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Create a new user and give them sudo permissions without password
 ARG UID=1000
