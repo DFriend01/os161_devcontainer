@@ -39,15 +39,9 @@ ENV DEBIAN_FRONTEND=
 # Set new user as the default user for the container
 USER $USERNAME
 
-# Compile OS161 dependencies and add to path
-WORKDIR $HOME
-COPY cs161-ubuntu-darwin.sh .
-
 ENV WORKSPACE_DIR=/workspace
 ENV OS161_SRC=$WORKSPACE_DIR/os161/src
 WORKDIR $WORKSPACE_DIR
-COPY .vscode ./.vscode
-COPY setup.sh .
 
 # Set the default command to open a bash terminal
 CMD ["/bin/bash"]
