@@ -1,7 +1,7 @@
 
 #/bin/bash
 
-# This script only needs to be ran once even after rebuilding (as long as the docker volume isn't deleted)
+# This script only needs to be ran once even after rebuilding (as long as the osdev_home volume isn't deleted)
 echo "Setting up devcontainer"
 
 function install() {

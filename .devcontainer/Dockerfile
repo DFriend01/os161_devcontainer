@@ -16,6 +16,7 @@ RUN apt-get update && apt-get -y install \
         libmpc-dev \
         ncurses-dev \
         sudo \
+        tree \
         tmux \
         vim \
         wget \    

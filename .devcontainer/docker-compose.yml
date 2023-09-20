@@ -5,9 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - type: bind
-        source: ${LOCAL_OS161_PATH}
-        target: /workspace/os161/
+      - ..:/workspace:cached
       - osdev_home:/home/osdev
     command: sleep infinity
 volumes:
