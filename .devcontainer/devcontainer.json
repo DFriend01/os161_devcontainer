@@ -1,0 +1,31 @@
+// JSON Reference: https://containers.dev/implementors/json_reference/
+{
+    "name": "OS161 Workspace",
+    "remoteUser": "osdev",
+    "service": "os161-workspace",
+    "workspaceFolder": "/workspace",
+    "dockerComposeFile": "docker-compose.yml",
+    "customizations": {
+        "vscode": {
+            "settings": {
+				"terminal.integrated.profiles.linux": {
+					"bash": {
+						"path": "bash",
+						"icon": "terminal-bash"
+					}
+				},
+				"terminal.integrated.defaultProfile.linux": "bash"
+			},
+
+            // Add vscode extensions here (the extension identifier)
+            "extensions": [
+                "bierner.markdown-preview-github-styles",
+                "christian-kohler.path-intellisense",
+                "eamodio.gitlens",
+                "ms-vscode.cpptools",
+                "ms-vscode.cmake-tools",
+                "vscode-icons-team.vscode-icons"
+            ]
+        }
+    }
+}

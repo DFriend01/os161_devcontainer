@@ -1,0 +1,13 @@
+{
+  "name": "Debug Kernel",
+  "request": "launch",
+  "program": "~/os161/bin/mips-harvard-os161-gdb",
+  "args": ["kernel"],
+  "cwd": "/workspace/os161/root",
+  "externalConsole": true,
+  "logging": {
+    "moduleLoad": false,
+    "trace": true
+  },
+  "showDisplayString": true
+}

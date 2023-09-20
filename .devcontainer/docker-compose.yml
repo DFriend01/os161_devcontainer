@@ -1,0 +1,17 @@
+version: '1.0'
+services:
+  os161-workspace:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - type: bind
+        source: ~/os161 # CHANGE THIS (SEE README)
+        target: /workspace/os161/
+      - os161_dep:/home/osdev
+
+    command: sleep infinity
+
+volumes:
+  os161_dep:
+    
