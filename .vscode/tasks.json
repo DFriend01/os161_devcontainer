@@ -11,12 +11,12 @@
             "problemMatcher": []
         },
         {
-            "label": "Full Build and Configure",
+            "label": "Build",
             "type": "shell",
             "dependsOrder": "sequence",
             "dependsOn":[
                 "Configure OS Tree",
-                "Build Userland",
+                "Compile Userland",
                 "Configure Kernel",
                 "Compile Kernel"
             ],
@@ -41,7 +41,7 @@
             "problemMatcher": [],
         },
         {
-            "label": "Build Userland",
+            "label": "Compile Userland",
             "command": "bmake && bmake install",
             "type": "shell",
             "options": {
