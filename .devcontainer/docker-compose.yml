@@ -5,8 +5,10 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - ..:/workspace:cached
-      - osdev_home:/home/osdev
+      - type: bind
+        source: ..
+        target: /workspace
+      - osdev_home:/home/osdev:delegated
     command: sleep infinity
 volumes:
   osdev_home:
