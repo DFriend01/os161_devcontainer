@@ -18,26 +18,25 @@
             "type": "shell",
             "command": "sys161 kernel",
             "options": {
-                "cwd": "/workspace/os161/root"
+                "cwd": "${env:WORKSPACE_DIR}/os161/root"
             },
             "problemMatcher": []
         },
         {
             "label": "Configure OS Tree",
-            "detail": "Configure the path to the OS tree",
             "type": "shell",
             "command": "./configure --ostree=${input:tree_path}",
             "options": {
-                "cwd": "/workspace/os161/src",
+                "cwd": "${env:WORKSPACE_DIR}/os161/src",
             },
             "problemMatcher": [],
         },
         {
             "label": "Build Userland",
-            "command": "bmake -j$(nproc) && bmake install",
+            "command": "bmake && bmake install",
             "type": "shell",
             "options": {
-                "cwd": "/workspace/os161/src",
+                "cwd": "${env:WORKSPACE_DIR}/os161/src",
             },
             "problemMatcher": [],
             "group": "build"
@@ -47,16 +46,16 @@
             "command": "./config ${input:kernel}",
             "type": "shell",
             "options": {
-                "cwd": "/workspace/os161/src/kern/conf"
+                "cwd": "${env:WORKSPACE_DIR}/os161/src/kern/conf"
             },
             "problemMatcher": []
         },
         {
             "label": "Compile Kernel",
-            "command": "bmake depend && bmake -j$(nproc) && bmake install",
+            "command": "bmake depend && bmake && bmake install",
             "type": "shell",
             "options": {
-                "cwd": "/workspace/os161/src/kern/compile/${input:kernel}",
+                "cwd": "${env:WORKSPACE_DIR}/os161/src/kern/compile/${input:kernel}",
             },
             "problemMatcher": []
         },
@@ -66,7 +65,7 @@
             "id": "tree_path",
             "type": "promptString",
             "description": "Path to source tree",
-            "default": "${WORKSPACE_DIR}/os161/root"
+            "default": "${env:WORKSPACE_DIR}/os161/root"
         },
         {
             "id": "kernel",

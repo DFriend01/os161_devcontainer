@@ -5,7 +5,8 @@ BINUTILS161="binutils-2.24+os161-2.1"
 GCC161="gcc-4.8.3+os161-2.1"
 GDB161="gdb-7.8+os161-2.1"
 #MIRROR="http://www.eecs.harvard.edu/~dholland/os161/download"
-MIRROR="http://www.ece.ubc.ca/~os161/download"
+#MIRROR="http://www.ece.ubc.ca/~os161/download"
+MIRROR="https://people.ece.ubc.ca/~os161/download"
 
 #echo '*** Updating appliance ***'
 #update50
