@@ -17,7 +17,7 @@ function install() {
 
     echo "Fetching default sys161.conf file from the ECE server..."
     wget people.ece.ubc.ca/~os161/download/sys161.conf.sample -O ${WORKSPACE_DIR}/os161/sys161.conf
-    echo "You may copy sys161.conf located in ${WORKSPACE_DIR}/os161 into your root directory or use your own with:"
+    echo "You may copy sys161.conf (or use your own) located in ${WORKSPACE_DIR}/os161 into your root directory with:"
     echo -e "\tcp \$WORKSPACE_DIR/os161/sys161.conf \$WORKSPACE_DIR/os161/root"
 }
 
