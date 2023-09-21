@@ -22,14 +22,14 @@ Docker containers by themselves are incapable of having persisting storage. Once
 the data inside is wiped. The devcontainer handles this issue by utilizing docker volumes, which
 allows persistent storage between multiple uses of the devcontainer. As is, there are two docker volumes:
 
-1. The first docker volume is used on the `os161_devcontainer` directory, which synchronizes everything
-inside this directory between the devcontainer and the user's host machine. Changes made in the devcontainer
-are observed in the local host, and vice versa. The volume is mapped between the location of `os161_devcontainer`
-on your host machine, and the directory specified by the environment variable `$WORKSPACE_DIR` inside the
-devcontainer.
+1. The first is a [bind mount](https://docs.docker.com/storage/bind-mounts/) on the `os161_devcontainer` directory,
+which synchronizes everything inside this directory between the devcontainer and the user's host machine. 
+Changes made in the devcontainer are observed in the local host, and vice versa. The bind mount
+is mapped between the location of `os161_devcontainer` on your host machine, and the directory
+specified by the environment variable `$WORKSPACE_DIR` inside the devcontainer.
 
-2. The second docker volume is used on the home directory for the `osdev` user inside the devcontainer.
-Unlike the first volume, this volume is stored as an anonymous volume and is handled by docker.
+2. The second is a [named volume](https://docs.docker.com/storage/volumes/), which is used on the home directory
+for the `osdev` user inside the devcontainer. Unlike the first volume, this volume is stored and is handled by docker.
 
 > [!WARNING]
 > Any data that is not stored in either `$WORKSPACE_DIR` or `/home/osdev` will be wiped out upon
@@ -44,7 +44,9 @@ Unlike the first volume, this volume is stored as an anonymous volume and is han
     - Linux
 
 2. VS Code must be installed to take full advantage of all the devcontainer's features. However, it is
-possible to use the devcontainer without VS Code using the command line interface only.
+possible to use the devcontainer without VS Code using the command line interface only. If you are using
+VS Code, you must also install the
+[Dev Containers Extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers).
 
 ## Setup
 
@@ -97,6 +99,11 @@ git clone <REPO URL> src
         - Exit the devcontainer with `exit`
         - On your local host: `cd os161_devcontainer/.devcontainer`
         - Execute `docker compose down`
+
+> [!NOTE]
+> When building the docker container, docker likes to hang sometimes. Changing the network connection
+> sometimes helps. You could also try restarting the docker daemon, but the troubleshooting steps may vary from
+> machine to machine.
 
 5. **Inside the devcontainer**, run the setup script:
 
