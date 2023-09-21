@@ -74,7 +74,8 @@ git clone <REPO URL> src
 ```
 
 > [!IMPORTANT]
-> Your os161 code must be contained inside `$WORKSPACE_DIR/os161/src`.
+> Your os161 code must be contained inside `os161_devcontainer/os161/src`. Otherwise, you may get unexpected
+> results when attempting to build.
 
 4. Build the devcontainer and enter it:
 
