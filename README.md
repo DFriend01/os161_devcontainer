@@ -39,13 +39,19 @@ for the `osdev` user inside the devcontainer. Unlike the first volume, this volu
 ## Prerequisites
 
 1. Docker must be installed. The installation process looks different depending on the operating system:
-    - Windows WSL2
+    - Windows 11
+        - [Install WSL and Ubuntu](https://ubuntu.com/tutorials/install-ubuntu-on-wsl2-on-windows-11-with-gui-support#1-overview)
+        - [Install Docker Desktop](https://docs.docker.com/desktop/install/windows-install/)
     - MacOS
+        - [Install Docker Desktop](https://docs.docker.com/desktop/install/mac-install/)
     - Linux
+        - [Install Docker Engine](https://docs.docker.com/engine/install/)
+        - [Manage Docker as a Non-Root User](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user)
+        - [Configure to Start on Boot](https://docs.docker.com/engine/install/linux-postinstall/#configure-docker-to-start-on-boot) (Optional)
 
-2. VS Code must be installed to take full advantage of all the devcontainer's features. However, it is
-possible to use the devcontainer without VS Code using the command line interface only. If you are using
-VS Code, you must also install the
+2. [VS Code must be installed](https://code.visualstudio.com/download) to take full advantage
+of all the devcontainer's features. However, it is possible to use the devcontainer without VS Code
+using the command line interface only. If you are using VS Code, you must also install the
 [Dev Containers Extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers).
 
 ## Setup
