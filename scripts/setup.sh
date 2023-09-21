@@ -10,10 +10,6 @@ function install() {
     cd $WORKSPACE_DIR/scripts
     bash ./cs161-ubuntu-darwin.sh
 
-    echo "Linking GDB Alias"
-    cd $HOME/tools/os161/bin
-    ln -s mips-harvard-os161-gdb os161-gdb
-
     cd $prev_dir
 
     echo "Adding OS161 dependencies to PATH..."

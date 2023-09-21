@@ -2,6 +2,15 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "Setup Workspace",
+            "type": "shell",
+            "command": "./setup.sh",
+            "options": {
+                "cwd": "${env:WORKSPACE_DIR}/scripts"
+            },
+            "problemMatcher": []
+        },
+        {
             "label": "Full Build and Configure",
             "type": "shell",
             "dependsOrder": "sequence",
