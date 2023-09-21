@@ -20,8 +20,8 @@ function install() {
     echo "PATH=$HOME/tools/os161/bin:$HOME/tools/sys161/bin:$PATH >> $HOME/.bashrc"
 }
 
-if [[ -d $HOME/os161 ]] && [[ -d $HOME/sys161 ]] && [[ -d $HOME/tools ]]; then
-    echo "OS161 Dependencies already installed. Skipping..."
+if [[ -d $HOME/tools ]]; then
+    echo "~/tools already exists. Delete ~/tools if rebuilding is desired. Skipping build..."
 else
     install
 fi
