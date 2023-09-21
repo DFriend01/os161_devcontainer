@@ -20,7 +20,8 @@
                 "Configure Kernel",
                 "Compile Kernel"
             ],
-            "problemMatcher": []
+            "problemMatcher": [],
+            "group": "build"
         },
         {
             "label": "Run Kernel",
@@ -48,7 +49,6 @@
                 "cwd": "${env:WORKSPACE_DIR}/os161/src",
             },
             "problemMatcher": [],
-            "group": "build"
         },
         {
             "label": "Configure Kernel",
