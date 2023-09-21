@@ -72,31 +72,31 @@ git clone <REPO URL> src
 
     a. **With VS Code**
         
-        - Start by opening VS Code with `os161_devcontainer` as the project directory: `code os161_devcontainer`.
-        - VS Code should prompt you to reopen in the devcontainer -- accept the prompt. If VS Code does not prompt
-          you, then run the VS Code command `ctrl + shift + p` then `Dev Containers: Rebuild and Reopen in Container`.
-        - To stop the devcontainer, just close VS Code.
+    - Start by opening VS Code with `os161_devcontainer` as the project directory: `code os161_devcontainer`.
+    - VS Code should prompt you to reopen in the devcontainer -- accept the prompt. If VS Code does not prompt
+        you, then run the VS Code command `ctrl + shift + p` then `Dev Containers: Rebuild and Reopen in Container`.
+    - To stop the devcontainer, just close VS Code.
 
     b. **With CLI**
 
-        - Start the devcontainer service:
+    - Start the devcontainer service:
 
-        ```
-        cd os161_devcontainer/.devcontainer
-        docker compose up --detach
-        ```
+    ```
+    cd os161_devcontainer/.devcontainer
+    docker compose up --detach
+    ```
 
-        - Get the container ID of the devcontainer. Execute `docker ps` and copy the container ID.
-        - Enter the devcontainer:
+    - Get the container ID of the devcontainer. Execute `docker ps` and copy the container ID.
+    - Enter the devcontainer:
 
-        ```
-        docker exec -it <CONTAINER ID> /bin/bash
-        ```
+    ```
+    docker exec -it <CONTAINER ID> /bin/bash
+    ```
 
-        - To stop the devcontainer:
-            - Exit the devcontainer with `exit`
-            - On your local host: `cd os161_devcontainer/.devcontainer`
-            - Execute `docker compose down`
+    - To stop the devcontainer:
+        - Exit the devcontainer with `exit`
+        - On your local host: `cd os161_devcontainer/.devcontainer`
+        - Execute `docker compose down`
 
 5. **Inside the devcontainer**, run the setup script:
 
@@ -105,14 +105,13 @@ cd $WORKSPACE_DIR/scripts
 ./setup.sh
 ```
 
-6. Source the `.bashrc` file or reopen a new terminal inside the devcontainer:
+6. Source the `.bashrc` file or reopen a new terminal inside the devcontainer. Confirm that the dependencies installed correctly by observing `which sys161` outputting
+a valid path. Also take a look at `~/tools`.
 
 ```
 source /home/osdev/.bashrc
 ```
 
-    Confirm that the dependencies installed correctly by observing `which sys161` outputting
-    a valid path. Also take a look at `~/tools`.
 
 7. Build your kernel. The setup script automatically fetches a configuration script `sys161.conf` located in
 `$WORKSPACE_DIR/os161`. Either copy it into `$WORKSPACE_DIR/os161/root` after building, or use your own
