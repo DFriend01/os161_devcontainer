@@ -75,6 +75,7 @@ git clone <REPO URL> src
         - Start by opening VS Code with `os161_devcontainer` as the project directory: `code os161_devcontainer`.
         - VS Code should prompt you to reopen in the devcontainer -- accept the prompt. If VS Code does not prompt
           you, then run the VS Code command `ctrl + shift + p` then `Dev Containers: Rebuild and Reopen in Container`.
+        - To stop the devcontainer, just close VS Code.
 
     b. **With CLI**
 
