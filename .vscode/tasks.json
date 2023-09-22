@@ -3,6 +3,7 @@
     "tasks": [
         {
             "label": "Setup Workspace",
+            "detail": "Compiles OS161 dependencies and configures the PATH variable",
             "type": "shell",
             "command": "./setup.sh",
             "options": {
@@ -12,6 +13,7 @@
         },
         {
             "label": "Build",
+            "detail": "Does a full build of the OS161 kernel",
             "type": "shell",
             "dependsOrder": "sequence",
             "dependsOn":[
@@ -25,6 +27,7 @@
         },
         {
             "label": "Run Kernel",
+            "detail": "Run the OS161 kernel",
             "type": "shell",
             "command": "sys161 kernel",
             "options": {
@@ -34,6 +37,7 @@
         },
         {
             "label": "Configure OS Tree",
+            "detail": "Configures the OS tree with the provided path",
             "type": "shell",
             "command": "./configure --ostree=${input:tree_path}",
             "options": {
@@ -43,6 +47,7 @@
         },
         {
             "label": "Compile Userland",
+            "detail": "Compiles userland in src/",
             "command": "bmake && bmake install",
             "type": "shell",
             "options": {
@@ -52,6 +57,7 @@
         },
         {
             "label": "Configure Kernel",
+            "detail": "Configures the type of kernel to be compiled",
             "command": "./config ${input:kernel}",
             "type": "shell",
             "options": {
@@ -61,6 +67,7 @@
         },
         {
             "label": "Compile Kernel",
+            "detail": "Compile the kernel with the configured type",
             "command": "bmake depend && bmake && bmake install",
             "type": "shell",
             "options": {

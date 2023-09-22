@@ -8,6 +8,9 @@ services:
       - type: bind
         source: ..
         target: /workspace
+      - type: bind
+        source: ${HOME}/.ssh
+        target: /home/osdev/.ssh
       - osdev_home:/home/osdev:delegated
     command: sleep infinity
 volumes:

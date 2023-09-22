@@ -15,6 +15,7 @@ RUN apt-get update && apt-get -y install \
         git \
         libmpc-dev \
         ncurses-dev \
+        openssh-client \
         sudo \
         tree \
         tmux \
