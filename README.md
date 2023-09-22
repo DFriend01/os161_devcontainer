@@ -20,7 +20,7 @@ on your machine (with some limitations).
 
 Docker containers by themselves are incapable of having persisting storage. Once a container is stopped,
 the data inside is wiped. The devcontainer handles this issue by utilizing docker volumes, which
-allows persistent storage between multiple uses of the devcontainer. As is, there are two docker volumes:
+allows persistent storage between multiple uses of the devcontainer. As is, there are three docker volumes:
 
 1. The first is a [bind mount](https://docs.docker.com/storage/bind-mounts/) on the `os161_devcontainer` directory,
 which synchronizes everything inside this directory between the devcontainer and the user's host machine. 
@@ -28,7 +28,9 @@ Changes made in the devcontainer are observed in the local host, and vice versa.
 is mapped between the location of `os161_devcontainer` on your host machine, and the directory
 specified by the environment variable `$WORKSPACE_DIR` inside the devcontainer.
 
-2. The second is a [named volume](https://docs.docker.com/storage/volumes/), which is used on the home directory
+2. The second is another bind mount that maps `~/.ssh` on the local host to `~/.ssh` in the devcontainer.
+
+3. The third is a [named volume](https://docs.docker.com/storage/volumes/), which is used on the home directory
 for the `osdev` user inside the devcontainer. Unlike the first volume, this volume is stored and is handled by docker.
 
 > [!WARNING]
