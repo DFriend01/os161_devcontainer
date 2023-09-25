@@ -45,9 +45,12 @@ WORKDIR $HOME
 COPY --chown=${USERNAME}:${USERNAME} config .
 
 # Update .bashrc
-RUN ./update-bashrc.sh
+RUN chmod +x update-bashrc.sh \
+    && /bin/bash -c ${HOME}/update-bashrc.sh \
+    && rm ${HOME}/update-bashrc.sh
 
 ENV WORKSPACE_DIR=/workspace
+ENV OS161_DEPENDENCIES_DIR=/os161_dependencies
 ENV OS161_SRC=$WORKSPACE_DIR/os161/src
 WORKDIR $WORKSPACE_DIR
 

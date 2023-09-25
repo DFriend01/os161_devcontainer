@@ -8,11 +8,16 @@ function install() {
     prev_dir=$(pwd)
     cd $WORKSPACE_DIR/scripts
     bash ./cs161-ubuntu-darwin.sh
+
+    # Probably should parameterize the darwin script to install in some specified directory
+    # but this works for now
+    mv ~/tools $OS161_DEPENDENCIES_DIR
+
     cd $prev_dir
 }
 
-if [[ -d $HOME/tools ]]; then
-    echo "~/tools already exists. Delete ~/tools if rebuilding is desired. Skipping build..."
+if [[ -d $OS161_DEPENDENCIES_DIR/tools ]]; then
+    echo "${OS161_DEPENDENCIES_DIR}/tools already exists. Delete it if rebuilding is desired. Skipping build..."
 else
     install
 fi
