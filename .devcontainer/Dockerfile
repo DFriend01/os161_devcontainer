@@ -37,6 +37,11 @@ RUN groupadd --gid $GID $USERNAME \
 
 ENV DEBIAN_FRONTEND=
 
+# Set environment variables
+ENV WORKSPACE_DIR=/workspace
+ENV OS161_DEPENDENCIES_DIR=/os161_dependencies
+ENV OS161_SRC=$WORKSPACE_DIR/os161/src
+
 # Set new user as the default user for the container
 USER $USERNAME
 
@@ -48,11 +53,6 @@ COPY --chown=${USERNAME}:${USERNAME} config .
 RUN chmod +x update-bashrc.sh \
     && /bin/bash -c ${HOME}/update-bashrc.sh \
     && rm ${HOME}/update-bashrc.sh
-
-ENV WORKSPACE_DIR=/workspace
-ENV OS161_DEPENDENCIES_DIR=/os161_dependencies
-ENV OS161_SRC=$WORKSPACE_DIR/os161/src
-WORKDIR $WORKSPACE_DIR
 
 # Set the default command to open a bash terminal
 CMD ["/bin/bash"]

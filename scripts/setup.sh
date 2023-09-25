@@ -11,7 +11,7 @@ function install() {
 
     # Probably should parameterize the darwin script to install in some specified directory
     # but this works for now
-    mv ~/tools $OS161_DEPENDENCIES_DIR
+    sudo mv ~/tools $OS161_DEPENDENCIES_DIR
 
     cd $prev_dir
 }

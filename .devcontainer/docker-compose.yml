@@ -11,5 +11,5 @@ services:
       - os161_tools:/os161_dependencies:delegated
     command: sleep infinity
 volumes:
-  osdev_home:
+  os161_tools:
     
