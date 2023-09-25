@@ -40,6 +40,13 @@ ENV DEBIAN_FRONTEND=
 # Set new user as the default user for the container
 USER $USERNAME
 
+# Copy config contents into home directory
+WORKDIR $HOME
+COPY --chown=${USERNAME}:${USERNAME} config .
+
+# Update .bashrc
+RUN ./update-bashrc.sh
+
 ENV WORKSPACE_DIR=/workspace
 ENV OS161_SRC=$WORKSPACE_DIR/os161/src
 WORKDIR $WORKSPACE_DIR
