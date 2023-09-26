@@ -3,7 +3,7 @@
     "tasks": [
         {
             "label": "Setup Workspace",
-            "detail": "Compiles OS161 dependencies and configures the PATH variable",
+            "detail": "Compiles OS161 dependencies",
             "type": "shell",
             "command": "./setup.sh",
             "options": {

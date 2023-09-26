@@ -37,12 +37,22 @@ RUN groupadd --gid $GID $USERNAME \
 
 ENV DEBIAN_FRONTEND=
 
+# Set environment variables. If you change these, also update docker-compose.yml accordingly.
+ENV WORKSPACE_DIR=/workspace
+ENV OS161_DEPENDENCIES_DIR=/os161_dependencies
+ENV OS161_SRC=$WORKSPACE_DIR/os161/src
+
 # Set new user as the default user for the container
 USER $USERNAME
 
-ENV WORKSPACE_DIR=/workspace
-ENV OS161_SRC=$WORKSPACE_DIR/os161/src
-WORKDIR $WORKSPACE_DIR
+# Copy config contents into home directory
+WORKDIR $HOME
+COPY --chown=${USERNAME}:${USERNAME} config .
+
+# Update .bashrc
+RUN chmod +x update-bashrc.sh \
+    && /bin/bash -c ${HOME}/update-bashrc.sh \
+    && rm ${HOME}/update-bashrc.sh
 
 # Set the default command to open a bash terminal
 CMD ["/bin/bash"]
