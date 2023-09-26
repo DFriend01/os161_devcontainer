@@ -28,15 +28,15 @@ Changes made in the devcontainer are observed in the local host, and vice versa.
 is mapped between the location of `os161_devcontainer` on your host machine, and the directory
 specified by the environment variable `$WORKSPACE_DIR` inside the devcontainer.
 
-2. The second is another bind mount that maps `~/.ssh` on the local host to `~/.ssh` in the devcontainer.
-
-3. The third is a [named volume](https://docs.docker.com/storage/volumes/), which is used on the home directory
-for the `osdev` user inside the devcontainer. Unlike the first volume, this volume is stored and is handled by docker.
+2. The second is a [named volume](https://docs.docker.com/storage/volumes/), which is used to persist the
+directory specified by the environment variable `$OS161_DEPENDENCIES_DIR` which persists the compiled OS161 tools to avoid 
+recompiling upon each rebuild of the docker container.
 
 > [!WARNING]
-> Any data that is not stored in either `$WORKSPACE_DIR` or `/home/osdev` will be wiped out upon
-> stopping the container. If you want to store data in another location, you will need to edit
-> the `docker-compose.yml` file to add another volume and rebuild the container.
+> Any data that is not stored in `$WORKSPACE_DIR` or any of its subdirectories will be wiped out upon
+> stopping the container. If you want to store data in another location inside the devcontainer,
+> you will need to edit the `docker-compose.yml` file to add another volume and rebuild the container.
+> Consult the [docker documentation](https://docs.docker.com/storage/volumes/#use-a-volume-with-docker-compose).
 
 ## Prerequisites
 
@@ -121,17 +121,15 @@ cd $WORKSPACE_DIR/scripts
 ./setup.sh
 ```
 
-6. Source the `.bashrc` file or reopen a new terminal inside the devcontainer. Confirm that the dependencies installed correctly by observing `which sys161` outputting
-a valid path. Also take a look at `~/tools`.
+Alternativly, you can run the `Setup Workspace` VS Code task. See the section on
+[VS Code tasks](#vs-code-tasks).
 
-```
-source /home/osdev/.bashrc
-```
+6. Confirm that the dependencies installed correctly by observing `which sys161` outputting
+a valid path. Also take a look at `$OS161_DEPENDENCIES_DIR/tools`.
 
-
-7. Build your kernel. The setup script automatically fetches a configuration script `sys161.conf` located in
-`$WORKSPACE_DIR/os161`. Either copy it into `$WORKSPACE_DIR/os161/root` after building, or use your own
-configuration file if you have one already.
+7. Build your kernel. You can either do it yourself following the
+[instructions on the course website](https://people.ece.ubc.ca/~os161/os161-site/build-os161.html)
+or run the [build task](#vs-code-tasks).
 
 ## VS Code Tasks
 
@@ -143,7 +141,37 @@ Run a VS Code task by:
 - Selecting `Tasks: Run Task`
 - Selecting the desired task to run
 
-> [!NOTE]
-> When building for the first time, sometimes the VS Code tasks that do the build process won't work until
-> you build for the first time. The reason as of right now is unknown. If you encounter any issues, just
-> build manually in the CLI and try the tasks later.
+Performing a full build of the kernel is mapped to `ctrl + shif + b`, which is also the `Build` task.
+
+## FAQs
+
+### Where can I find my source code on my host machine after developing in the devcontainer?
+
+Your work will be saved in the directory `os161_devcontainer/os161`. Everything inside `$WORKSPACE_DIR`
+inside the devcontainer is synced to `os161_devcontainer/os161`.
+
+### Will I need to run the setup script/task every time I start the devcontainer?
+
+No! You only need to run it when:
+
+- You are setting up the devcontainer for the first time; OR
+- You delete the docker named volume that contains the compiled OS161 tools; OR
+- You delete your `root` directory and/or your `sys161.conf` file
+
+The script does checks to make sure whether each setup step inside the script is necessary or not,
+so there is no harm in running it again if you want to.
+
+### How can I add my own dotfiles to the devcontainer?
+
+See the [documentation on configuration](.devcontainer/config/README.md).
+
+### How can I run VS Code commands and tasks?
+
+`ctrl + shift + p` opens the command palette. Search your desired VS Code command and execute it.
+If you want to execute a task, select the `Tasks: Run Task` VS Code command and select the desired
+task.
+
+### How can I add my own VS Code tasks?
+
+Add your own tasks to the [tasks configuration file](.vscode/tasks.json). See the existing tasks
+as examples.
