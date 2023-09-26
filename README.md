@@ -1,10 +1,15 @@
 # OS161 Devcontainer
 
 The OS161 devcontainer allows users to install their OS161 source code inside a docker
-container without the hassle of needing to install on their local host directly. The
-devcontainer has been tested on WSL2.
+container without the hassle of needing to install on their local host directly. It also
+provides additional features like VS Code tasks that streamline many of the redunant tasks
+that are common with developing OS161.
+
+The devcontainer has been tested on WSL2.
+
 
 ## How it works
+
 
 ### Overview
 
@@ -20,7 +25,8 @@ on your machine (with some limitations).
 
 Docker containers by themselves are incapable of having persisting storage. Once a container is stopped,
 the data inside is wiped. The devcontainer handles this issue by utilizing docker volumes, which
-allows persistent storage between multiple uses of the devcontainer. As is, there are three docker volumes:
+allows persistent storage between multiple uses of the devcontainer. As is, there are two docker volumes
+that the devcontainer uses:
 
 1. The first is a [bind mount](https://docs.docker.com/storage/bind-mounts/) on the `os161_devcontainer` directory,
 which synchronizes everything inside this directory between the devcontainer and the user's host machine. 
@@ -67,6 +73,20 @@ docker daemon.
 ```
 git clone https://github.com/DFriend01/os161_devcontainer.git
 ```
+
+> [!IMPORTANT]
+> If you are in Windows WSL, make sure that the devcontainer is cloned within the WSL network! If you
+> clone in the Windows partition, docker will not work as expected. You can tell if you are in the
+> Windows partition if:
+>
+> - The path outputed by the command `pwd` starts with `/mnt/c` if you are using the Ubuntu terminal
+> - The current directory starts with `C:` or `/c` if you are using the command prompt, git bash, or powershell
+>
+> It is recommended that you install [Windows Terminal](https://learn.microsoft.com/en-us/windows/terminal/install)
+> and use the Ubuntu profile when working in WSL. Also make sure that the starting directory is your home directory
+> `~`. If not, you will need to change the starting directory field for the Ubuntu profile to
+> `//wsl.localhost/<DISTRO NAME>/home/<USERNAME>`.
+> See the [windows terminal documentation](https://learn.microsoft.com/en-us/windows/terminal/customize-settings/profile-general#starting-directory).
 
 3. Clone your OS161 source code into the devcontainer:
 
@@ -147,8 +167,22 @@ Performing a full build of the kernel is mapped to `ctrl + shif + b`, which is a
 
 ### Where can I find my source code on my host machine after developing in the devcontainer?
 
-Your work will be saved in the directory `os161_devcontainer/os161`. Everything inside `$WORKSPACE_DIR`
-inside the devcontainer is synced to `os161_devcontainer/os161`.
+Your work will be saved in the directory `os161_devcontainer/os161`. Everything inside the `$WORKSPACE_DIR`
+directory in the devcontainer is synced to `os161_devcontainer/os161` on your local host.
+
+### Where is my OS161 code stored in the devcontainer?
+
+OS161 source code is stored in `$WORKSPACE_DIR/os161/src`. If you changed directories and do not remember
+where the source code is, then change directories back to the workspace:
+
+```bash
+cd $WORKSPACE_DIR
+```
+
+### Where are the OS161 tools stored?
+
+The OS161 tools are stored in `$OS161_DEPENDENCIES_DIR`. This directory is persisted in a docker volume,
+so any changes made to the tools (i.e. if you desire to add symbolic links), those are also persisted.
 
 ### Will I need to run the setup script/task every time I start the devcontainer?
 
@@ -158,7 +192,7 @@ No! You only need to run it when:
 - You delete the docker named volume that contains the compiled OS161 tools; OR
 - You delete your `root` directory and/or your `sys161.conf` file
 
-The script does checks to make sure whether each setup step inside the script is necessary or not,
+The script does check to make sure whether each setup step inside the script is necessary or not,
 so there is no harm in running it again if you want to.
 
 ### How can I add my own dotfiles to the devcontainer?
