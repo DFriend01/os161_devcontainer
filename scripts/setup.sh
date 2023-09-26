@@ -17,13 +17,16 @@ function install() {
 }
 
 if [[ -d $OS161_DEPENDENCIES_DIR/tools ]]; then
-    echo "${OS161_DEPENDENCIES_DIR}/tools already exists. Delete it if rebuilding is desired. Skipping build..."
+    echo "${OS161_DEPENDENCIES_DIR}/tools already exists. Delete the tools directory " + \
+         "if rebuilding is desired. Skipping build..."
 else
     install
 fi
 
 if [[ ! -d ${WORKSPACE_DIR}/os161/root ]]; then
     mkdir -p ${WORKSPACE_DIR}/os161/root
+else
+    echo "root directory already exists"
 fi
 
 if [[ ! -f ${WORKSPACE_DIR}/os161/root/sys161.conf ]]; then
