@@ -16,7 +16,7 @@ ostree_path=""
 default_ostree_path=${WORKSPACE_DIR}/os161/root
 
 # Grab CLI arguments
-while getopts ":hp" flag; do
+while getopts ":hp:" flag; do
     case ${flag} in
         h) helpMessage; exit 0 ;;
         p) ostree_path=${OPTARG} ;;

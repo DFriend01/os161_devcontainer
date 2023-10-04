@@ -18,7 +18,7 @@ kernel=""
 default_ostree_path=${WORKSPACE_DIR}/os161/root
 
 # Grab CLI arguments
-while getopts ":hk:p" flag; do
+while getopts ":hk:p:" flag; do
     case ${flag} in
         h) helpMessage; exit 0 ;;
         k) kernel=${OPTARG} ;;
@@ -38,3 +38,5 @@ scripts_directory=${WORKSPACE_DIR}/scripts
 bash ${scripts_directory}/build_helpers/configure_os_tree.sh -p ${ostree_path}
 bash ${scripts_directory}/build_helpers/compile_userland.sh
 bash ${scripts_directory}/build_helpers/configure_and_compile_kernel.sh -k ${kernel}
+
+echo "Build done"

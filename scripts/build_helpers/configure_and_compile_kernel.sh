@@ -51,4 +51,4 @@ else
 fi
 
 cd ${prev_dir}
-echo "Done configuring the kernel"
+echo "Done configuring and compiling the kernel"
