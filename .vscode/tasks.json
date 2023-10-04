@@ -26,6 +26,16 @@
             "group": "build"
         },
         {
+            "label": "Clean Build",
+            "detail": "Restore the source tree to a pristine state and remove all generated files",
+            "type": "shell",
+            "command": "./clean_build.sh",
+            "options": {
+                "cwd": "${env:WORKSPACE_DIR}/scripts"
+            },
+            "problemMatcher": []
+        },
+        {
             "label": "Run Kernel",
             "detail": "Run the OS161 kernel",
             "type": "shell",
