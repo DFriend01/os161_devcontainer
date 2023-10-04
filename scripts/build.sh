@@ -28,6 +28,13 @@ while getopts ":hk:p:" flag; do
     esac
 done
 
+# Assert that the kernel argument is non-empty
+if [[ -z ${kernel} ]]; then
+    echo "ERROR: Option -k is missing or argument value is empty"
+    helpMessage
+    exit 1
+fi
+
 # If os tree path is empty, set to default path
 if [[ -z ${ostree_path} ]]; then
     ostree_path=${default_ostree_path}
