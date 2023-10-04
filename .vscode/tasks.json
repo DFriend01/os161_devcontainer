@@ -13,15 +13,12 @@
         },
         {
             "label": "Build",
-            "detail": "Does a full build of the OS161 kernel",
+            "detail": "Does a full build of OS161",
             "type": "shell",
-            "dependsOrder": "sequence",
-            "dependsOn":[
-                "Configure OS Tree",
-                "Compile Userland",
-                "Configure Kernel",
-                "Compile Kernel"
-            ],
+            "command": "./build.sh -p ${input:tree_path} -k ${input:kernel}",
+            "options": {
+                "cwd": "${env:WORKSPACE_DIR}/scripts"
+            },
             "problemMatcher": [],
             "group": "build"
         },
@@ -49,39 +46,29 @@
             "label": "Configure OS Tree",
             "detail": "Configures the OS tree with the provided path",
             "type": "shell",
-            "command": "./configure --ostree=${input:tree_path}",
+            "command": "./configure_os_tree.sh -p ${input:tree_path}",
             "options": {
-                "cwd": "${env:WORKSPACE_DIR}/os161/src",
+                "cwd": "${env:WORKSPACE_DIR}/scripts/build_helpers",
             },
             "problemMatcher": [],
         },
         {
             "label": "Compile Userland",
             "detail": "Compiles userland in src/",
-            "command": "bmake && bmake install",
+            "command": "./compile_userland.sh",
             "type": "shell",
             "options": {
-                "cwd": "${env:WORKSPACE_DIR}/os161/src",
+                "cwd": "${env:WORKSPACE_DIR}/scripts/build_helpers",
             },
             "problemMatcher": [],
         },
         {
-            "label": "Configure Kernel",
-            "detail": "Configures the type of kernel to be compiled",
-            "command": "./config ${input:kernel}",
+            "label": "Configure and Compile Kernel",
+            "detail": "Configure and compile a specified kernel",
+            "command": "./configure_and_compile_kernel.sh -k ${input:kernel}",
             "type": "shell",
             "options": {
-                "cwd": "${env:WORKSPACE_DIR}/os161/src/kern/conf"
-            },
-            "problemMatcher": []
-        },
-        {
-            "label": "Compile Kernel",
-            "detail": "Compile the kernel with the configured type",
-            "command": "bmake depend && bmake && bmake install",
-            "type": "shell",
-            "options": {
-                "cwd": "${env:WORKSPACE_DIR}/os161/src/kern/compile/${input:kernel}",
+                "cwd": "${env:WORKSPACE_DIR}/scripts/build_helpers",
             },
             "problemMatcher": []
         },
