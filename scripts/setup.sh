@@ -17,7 +17,7 @@ function install() {
 }
 
 if [[ -d $OS161_DEPENDENCIES_DIR/tools ]]; then
-    echo "${OS161_DEPENDENCIES_DIR}/tools already exists. Delete the tools directory " + \
+    echo "${OS161_DEPENDENCIES_DIR}/tools already exists. Delete the tools directory" \
          "if rebuilding is desired. Skipping build..."
 else
     install
