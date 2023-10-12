@@ -1,37 +1,11 @@
 {
     "version": "2.0.0",
+
+    // TASK DEFINITIONS
+    // See documentation: https://code.visualstudio.com/Docs/editor/tasks
     "tasks": [
-        {
-            "label": "Setup Workspace",
-            "detail": "Compiles OS161 dependencies",
-            "type": "shell",
-            "command": "./setup.sh",
-            "options": {
-                "cwd": "${env:WORKSPACE_DIR}/scripts"
-            },
-            "problemMatcher": []
-        },
-        {
-            "label": "Build",
-            "detail": "Does a full build of OS161",
-            "type": "shell",
-            "command": "./build.sh -p ${input:tree_path} -k ${input:kernel}",
-            "options": {
-                "cwd": "${env:WORKSPACE_DIR}/scripts"
-            },
-            "problemMatcher": [],
-            "group": "build"
-        },
-        {
-            "label": "Clean Build",
-            "detail": "Restore the source tree to a pristine state and remove all generated files",
-            "type": "shell",
-            "command": "./clean_build.sh",
-            "options": {
-                "cwd": "${env:WORKSPACE_DIR}/scripts"
-            },
-            "problemMatcher": []
-        },
+
+        // RUN AND DEBUG TASKS
         {
             "label": "Run Kernel",
             "detail": "Run the OS161 kernel",
@@ -42,6 +16,9 @@
             },
             "problemMatcher": []
         },
+
+        // This task is not meant to be ran by itself, but rather as a pre-launch task for the
+        // debugger launch configuration (see .vscode/launch.json)
         {
             "label": "Run Kernel (Debug)",
             "detail": "Start the kernel and wait for a debugger connection",
@@ -52,7 +29,7 @@
                 "cwd": "${env:WORKSPACE_DIR}/os161/root"
             },
 
-            // Problem matcher required to let this prelaunch task to run in the background
+            // Problem matcher required to let this prelaunch task run in the background
             // so the debugging launch configuration can run without hanging
             "problemMatcher": [
                 {
@@ -71,6 +48,41 @@
                     }
                 }
             ]
+        },
+
+        // SETUP TASK
+        {
+            "label": "Setup Workspace",
+            "detail": "Compiles OS161 dependencies",
+            "type": "shell",
+            "command": "./setup.sh",
+            "options": {
+                "cwd": "${env:WORKSPACE_DIR}/scripts"
+            },
+            "problemMatcher": []
+        },
+
+        // BUILDING TASKS
+        {
+            "label": "Build",
+            "detail": "Does a full build of OS161. Mapped to CTRL + SHIFT + B.",
+            "type": "shell",
+            "command": "./build.sh -p ${input:tree_path} -k ${input:kernel}",
+            "options": {
+                "cwd": "${env:WORKSPACE_DIR}/scripts"
+            },
+            "problemMatcher": [],
+            "group": "build"
+        },
+        {
+            "label": "Clean Build",
+            "detail": "Restore the source tree to a pristine state and remove all generated files",
+            "type": "shell",
+            "command": "./clean_build.sh",
+            "options": {
+                "cwd": "${env:WORKSPACE_DIR}/scripts"
+            },
+            "problemMatcher": []
         },
         {
             "label": "Configure OS Tree",
@@ -103,6 +115,8 @@
             "problemMatcher": []
         },
     ],
+
+    // INPUT PARAMETERS TO TASKS
     "inputs": [
         {
             "id": "tree_path",
