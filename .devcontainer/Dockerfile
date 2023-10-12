@@ -7,9 +7,10 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get -y install \
         bash-completion \
         bmake \
-        cmake \
-        cscope \
         build-essential \
+        cmake \
+        coreutils \
+        cscope \
         emacs \
         gdb \
         git \
@@ -25,6 +26,9 @@ RUN apt-get update && apt-get -y install \
     && apt-get autoremove -y \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# Symbolic Links
+RUN ln -s /usr/bin/realpath /usr/bin/grealpath
 
 # Create a new user and give them sudo permissions without password
 ARG UID=1000
