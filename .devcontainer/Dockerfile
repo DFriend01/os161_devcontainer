@@ -13,6 +13,7 @@ RUN apt-get update && apt-get -y install \
         cscope \
         emacs \
         gdb \
+        gdbserver \
         git \
         libmpc-dev \
         ncurses-dev \

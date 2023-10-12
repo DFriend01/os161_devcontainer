@@ -43,6 +43,36 @@
             "problemMatcher": []
         },
         {
+            "label": "Run Kernel (Debug)",
+            "detail": "Start the kernel and wait for a debugger connection",
+            "isBackground": true,
+            "type": "shell",
+            "command": "sys161 -w kernel",
+            "options": {
+                "cwd": "${env:WORKSPACE_DIR}/os161/root"
+            },
+
+            // Problem matcher required to let this prelaunch task to run in the background
+            // so the debugging launch configuration can run without hanging
+            "problemMatcher": [
+                {
+                    "pattern": [
+                        {
+                            "regexp": ".",
+                            "file": 1,
+                            "location": 2,
+                            "message": 3
+                        }
+                    ],
+                    "background": {
+                        "activeOnStart": true,
+                        "beginsPattern": ".",
+                        "endsPattern": ".",
+                    }
+                }
+            ]
+        },
+        {
             "label": "Configure OS Tree",
             "detail": "Configures the OS tree with the provided path",
             "type": "shell",
