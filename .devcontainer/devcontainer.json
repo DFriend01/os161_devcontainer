@@ -25,6 +25,7 @@
                 "ms-azuretools.vscode-docker",
                 "ms-vscode.cpptools",
                 "ms-vscode.cmake-tools",
+                "realtable.os161-mips",
                 "vscode-icons-team.vscode-icons"
             ]
         }

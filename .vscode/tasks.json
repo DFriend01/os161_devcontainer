@@ -1,6 +1,75 @@
 {
     "version": "2.0.0",
+
+    // TASK DEFINITIONS
+    // See documentation: https://code.visualstudio.com/Docs/editor/tasks
     "tasks": [
+
+        // RUN AND DEBUG TASKS
+        {
+            "label": "Run Kernel",
+            "detail": "Run the OS161 kernel",
+            "type": "shell",
+            "command": "sys161 kernel",
+            "isBackground": true,
+            "options": {
+                "cwd": "${env:WORKSPACE_DIR}/os161/root"
+            },
+            
+            // Problem matcher required to let this task run in the background
+            "problemMatcher": [
+                {
+                    "pattern": [
+                        {
+                            "regexp": ".",
+                            "file": 1,
+                            "location": 2,
+                            "message": 3
+                        }
+                    ],
+                    "background": {
+                        "activeOnStart": true,
+                        "beginsPattern": ".",
+                        "endsPattern": ".",
+                    }
+                }
+            ]
+        },
+
+        // This task is not meant to be ran by itself, but rather as a pre-launch task for the
+        // debugger launch configuration (see .vscode/launch.json)
+        {
+            "label": "Wait for Debugger Connection",
+            "detail": "Start the kernel and wait for a debugger connection",
+            "isBackground": true,
+            "type": "shell",
+            "command": "sys161 -w kernel",
+            "options": {
+                "cwd": "${env:WORKSPACE_DIR}/os161/root"
+            },
+
+            // Problem matcher required to let this prelaunch task run in the background
+            // so the debugging launch configuration can run without hanging
+            "problemMatcher": [
+                {
+                    "pattern": [
+                        {
+                            "regexp": ".",
+                            "file": 1,
+                            "location": 2,
+                            "message": 3
+                        }
+                    ],
+                    "background": {
+                        "activeOnStart": true,
+                        "beginsPattern": ".",
+                        "endsPattern": ".",
+                    }
+                }
+            ]
+        },
+
+        // SETUP TASK
         {
             "label": "Setup Workspace",
             "detail": "Compiles OS161 dependencies",
@@ -11,9 +80,11 @@
             },
             "problemMatcher": []
         },
+
+        // BUILDING TASKS
         {
             "label": "Build",
-            "detail": "Does a full build of OS161",
+            "detail": "Does a full build of OS161. Mapped to CTRL + SHIFT + B.",
             "type": "shell",
             "command": "./build.sh -p ${input:tree_path} -k ${input:kernel}",
             "options": {
@@ -29,16 +100,6 @@
             "command": "./clean_build.sh",
             "options": {
                 "cwd": "${env:WORKSPACE_DIR}/scripts"
-            },
-            "problemMatcher": []
-        },
-        {
-            "label": "Run Kernel",
-            "detail": "Run the OS161 kernel",
-            "type": "shell",
-            "command": "sys161 kernel",
-            "options": {
-                "cwd": "${env:WORKSPACE_DIR}/os161/root"
             },
             "problemMatcher": []
         },
@@ -73,6 +134,8 @@
             "problemMatcher": []
         },
     ],
+
+    // INPUT PARAMETERS TO TASKS
     "inputs": [
         {
             "id": "tree_path",

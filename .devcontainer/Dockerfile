@@ -13,8 +13,10 @@ RUN apt-get update && apt-get -y install \
         cscope \
         emacs \
         gdb \
+        gdbserver \
         git \
         libmpc-dev \
+        nodejs \
         ncurses-dev \
         openssh-client \
         python-dev \

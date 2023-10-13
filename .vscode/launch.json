@@ -1,0 +1,51 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        
+        // Documentation: https://code.visualstudio.com/docs/editor/debugging
+        // JSON Reference: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes
+
+        // Launch configuration to run OS161. Remember to build first with CTRL + SHIFT + B.
+        {
+            "name": "Run OS161",
+            "type": "node",
+            "request": "launch",
+            "preLaunchTask": "Run Kernel",
+
+            // Avoid going to debug console due to warnings about deprecated nodejs versioning
+            "internalConsoleOptions": "neverOpen"
+        },
+
+        // Documentation: https://code.visualstudio.com/docs/cpp/cpp-debug
+        // JSON Reference: https://code.visualstudio.com/docs/cpp/launch-json-reference
+
+        // Launch configuration to debug OS161. Remember to build first with CTRL + SHIFT + B.
+        // There is an issue with this configuration where it will break in start.S, but it won't
+        // step into the C code for kmain unless you put a breakpoint there (or back and forth
+        // between C code and mips in general). If you see this, maybe you can try and figure that
+        // out and make a PR <3
+        {
+            "name": "Run OS161 (Debug)",
+            "type": "cppdbg",
+            "request": "launch",
+            "cwd": "${env:WORKSPACE_DIR}/os161/root",
+            "program": "kernel",
+            "preLaunchTask": "Wait for Debugger Connection",
+            
+            // Break at the entry point (in start.S)
+            "stopAtEntry": true,
+            "stopAtConnect": true,
+            
+            // GDB Configurations
+            "MIMode": "gdb",
+            "miDebuggerPath": "${env:OS161_DEPENDENCIES_DIR}/tools/os161/bin/os161-gdb",
+            "miDebuggerServerAddress": "unix:.sockets/gdb",
+
+            // Run GDB commands on startup
+            "setupCommands": []
+        },
+    ]
+}
