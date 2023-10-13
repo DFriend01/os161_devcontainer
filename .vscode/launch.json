@@ -7,6 +7,8 @@
         
         // Documentation: https://code.visualstudio.com/docs/editor/debugging
         // JSON Reference: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes
+
+        // Launch configuration to run OS161. Remember to build first with CTRL + SHIFT + B.
         {
             "name": "Run OS161",
             "type": "node",
@@ -19,6 +21,12 @@
 
         // Documentation: https://code.visualstudio.com/docs/cpp/cpp-debug
         // JSON Reference: https://code.visualstudio.com/docs/cpp/launch-json-reference
+
+        // Launch configuration to debug OS161. Remember to build first with CTRL + SHIFT + B.
+        // There is an issue with this configuration where it will break in start.S, but it won't
+        // step into the C code for kmain unless you put a breakpoint there (or back and forth
+        // between C code and mips in general). If you see this, maybe you can try and figure that
+        // out and make a PR <3
         {
             "name": "Run OS161 (Debug)",
             "type": "cppdbg",
