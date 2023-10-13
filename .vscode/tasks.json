@@ -11,16 +11,35 @@
             "detail": "Run the OS161 kernel",
             "type": "shell",
             "command": "sys161 kernel",
+            "isBackground": true,
             "options": {
                 "cwd": "${env:WORKSPACE_DIR}/os161/root"
             },
-            "problemMatcher": []
+            
+            // Problem matcher required to let this task run in the background
+            "problemMatcher": [
+                {
+                    "pattern": [
+                        {
+                            "regexp": ".",
+                            "file": 1,
+                            "location": 2,
+                            "message": 3
+                        }
+                    ],
+                    "background": {
+                        "activeOnStart": true,
+                        "beginsPattern": ".",
+                        "endsPattern": ".",
+                    }
+                }
+            ]
         },
 
         // This task is not meant to be ran by itself, but rather as a pre-launch task for the
         // debugger launch configuration (see .vscode/launch.json)
         {
-            "label": "Run Kernel (Debug)",
+            "label": "Wait for Debugger Connection",
             "detail": "Start the kernel and wait for a debugger connection",
             "isBackground": true,
             "type": "shell",

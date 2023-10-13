@@ -16,6 +16,7 @@ RUN apt-get update && apt-get -y install \
         gdbserver \
         git \
         libmpc-dev \
+        nodejs \
         ncurses-dev \
         openssh-client \
         python-dev \
