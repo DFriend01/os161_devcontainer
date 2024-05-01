@@ -17,18 +17,6 @@ When any changes are made in the `config` directory, you will need to rebuild th
 the VS Code command `Dev Containers: Rebuild and Reopen in Container`. Observe that your dotfiles are
 now populated in `/home/osdev`.
 
-### Update the .bashrc
-
-The `update-bashrc.sh` script is responsible for updating `~/.bashrc` inside the devcontainer. If you
-want to update the bashrc inside the devcontainer, edit the script to do so.
-
-For example, if you want to add `echo "Hello World!"` inside the bashrc, the following line should be
-added inside the `update-bashrc.sh` script:
-
-```bash
-add_line_to_bashrc 'echo "Hello World!"'
-```
-
 ### Add or Edit Dotfiles
 
 Add your own dotfiles to the devcontainer simply by dropping them inside the `config` directory and
