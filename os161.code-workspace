@@ -11,7 +11,39 @@
 
     // Workspace settings for VS Code editor and extensions
     "settings": {
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "search.exclude": {
+            "**/build": true,
+            "**/compile": true,
+            "**/root": true
+        },
 
+        "workbench.colorCustomizations": {
+            "activityBar.activeBackground": "#604f83",
+            "activityBar.activeBorder": "#dd4181",
+            "activityBar.background": "#876ac1",
+            "activityBar.foreground": "#e7e7e7",
+            "activityBar.inactiveForeground": "#e7e7e799",
+            "activityBarBadge.background": "#dd4181",
+            "activityBarBadge.foreground": "#e7e7e7",
+            "statusBar.background": "#604f83",
+            "statusBar.foreground": "#e7e7e7",
+            "statusBarItem.hoverBackground": "#592bb4",
+            "statusBarItem.remoteBackground": "#592bb4",
+            "statusBarItem.remoteForeground": "#e7e7e7",
+            "titleBar.activeBackground": "#604f83",
+            "titleBar.activeForeground": "#e7e7e7",
+            "titleBar.inactiveBackground": "#443561",
+            "titleBar.inactiveForeground": "#e7e7e799",
+            "commandCenter.border": "#e7e7e799"
+        },
+        
+        // Settings for .c files
+        "[c]": {
+            "editor.rulers": [80],
+        },
+        
     },
 
     // Launch configuration
