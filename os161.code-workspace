@@ -1,0 +1,259 @@
+{
+    // Workspace folders
+    "folders": [
+        {
+            "path": "."
+        },
+        {
+            "path": "os161"
+        }
+    ],
+
+    // Workspace settings for VS Code editor and extensions
+    "settings": {
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "search.exclude": {
+            "**/build": true,
+            "**/compile": true,
+            "**/root": true
+        },
+
+        "workbench.colorCustomizations": {
+            "activityBar.activeBackground": "#604f83",
+            "activityBar.activeBorder": "#dd4181",
+            "activityBar.background": "#876ac1",
+            "activityBar.foreground": "#e7e7e7",
+            "activityBar.inactiveForeground": "#e7e7e799",
+            "activityBarBadge.background": "#dd4181",
+            "activityBarBadge.foreground": "#e7e7e7",
+            "statusBar.background": "#604f83",
+            "statusBar.foreground": "#e7e7e7",
+            "statusBarItem.hoverBackground": "#592bb4",
+            "statusBarItem.remoteBackground": "#592bb4",
+            "statusBarItem.remoteForeground": "#e7e7e7",
+            "titleBar.activeBackground": "#604f83",
+            "titleBar.activeForeground": "#e7e7e7",
+            "titleBar.inactiveBackground": "#443561",
+            "titleBar.inactiveForeground": "#e7e7e799",
+            "commandCenter.border": "#e7e7e799"
+        },
+        
+        // Settings for .c files
+        "[c]": {
+            "editor.rulers": [80],
+        },
+        
+    },
+
+    // Launch configuration
+    "launch": {
+        // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+        "version": "0.2.0",
+        "configurations": [
+            
+            // Documentation: https://code.visualstudio.com/docs/editor/debugging
+            // JSON Reference: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes
+
+            // Launch configuration to run OS161. Remember to build first with CTRL + SHIFT + B.
+            {
+                "name": "Run OS161",
+                "type": "node",
+                "request": "launch",
+                "preLaunchTask": "Run Kernel",
+
+                // Avoid going to debug console due to warnings about deprecated nodejs versioning
+                "internalConsoleOptions": "neverOpen"
+            },
+
+            // Documentation: https://code.visualstudio.com/docs/cpp/cpp-debug
+            // JSON Reference: https://code.visualstudio.com/docs/cpp/launch-json-reference
+
+            // Launch configuration to debug OS161. Remember to build first with CTRL + SHIFT + B.
+            // There is an issue with this configuration where it will break in start.S, but it won't
+            // step into the C code for kmain unless you put a breakpoint there (or back and forth
+            // between C code and mips in general). If you see this, maybe you can try and figure that
+            // out and make a PR <3
+            {
+                "name": "Run OS161 (Debug)",
+                "type": "cppdbg",
+                "request": "launch",
+                "cwd": "${env:WORKSPACE_DIR}/os161/root",
+                "program": "kernel",
+                "preLaunchTask": "Wait for Debugger Connection",
+                
+                // Break at the entry point (in start.S)
+                "stopAtEntry": true,
+                "stopAtConnect": true,
+                
+                // GDB Configurations
+                "MIMode": "gdb",
+                "miDebuggerPath": "${env:OS161_DEPENDENCIES_DIR}/tools/os161/bin/os161-gdb",
+                "miDebuggerServerAddress": "unix:.sockets/gdb",
+
+                // Run GDB commands on startup
+                "setupCommands": []
+            },
+        ]
+    },
+
+    // Task definitions
+    "tasks": {
+        "version": "2.0.0",
+
+        // See documentation: https://code.visualstudio.com/Docs/editor/tasks
+        "tasks": [
+
+            // RUN AND DEBUG TASKS
+            {
+                "label": "Run Kernel",
+                "detail": "Run the OS161 kernel",
+                "type": "shell",
+                "command": "sys161 kernel",
+                "isBackground": true,
+                "options": {
+                    "cwd": "${env:WORKSPACE_DIR}/os161/root"
+                },
+                
+                // Problem matcher required to let this task run in the background
+                "problemMatcher": [
+                    {
+                        "pattern": [
+                            {
+                                "regexp": ".",
+                                "file": 1,
+                                "location": 2,
+                                "message": 3
+                            }
+                        ],
+                        "background": {
+                            "activeOnStart": true,
+                            "beginsPattern": ".",
+                            "endsPattern": ".",
+                        }
+                    }
+                ]
+            },
+
+            // This task is not meant to be ran by itself, but rather as a pre-launch task for the
+            // debugger launch configuration
+            {
+                "label": "Wait for Debugger Connection",
+                "detail": "Start the kernel and wait for a debugger connection",
+                "isBackground": true,
+                "type": "shell",
+                "command": "sys161 -w kernel",
+                "options": {
+                    "cwd": "${env:WORKSPACE_DIR}/os161/root"
+                },
+
+                // Problem matcher required to let this prelaunch task run in the background
+                // so the debugging launch configuration can run without hanging
+                "problemMatcher": [
+                    {
+                        "pattern": [
+                            {
+                                "regexp": ".",
+                                "file": 1,
+                                "location": 2,
+                                "message": 3
+                            }
+                        ],
+                        "background": {
+                            "activeOnStart": true,
+                            "beginsPattern": ".",
+                            "endsPattern": ".",
+                        }
+                    }
+                ]
+            },
+
+            // SETUP TASK
+            {
+                "label": "Setup Workspace",
+                "detail": "Compiles OS161 dependencies",
+                "type": "shell",
+                "command": "./setup.sh",
+                "options": {
+                    "cwd": "${env:WORKSPACE_DIR}/scripts"
+                },
+                "problemMatcher": []
+            },
+
+            // BUILDING TASKS
+            {
+                "label": "Build",
+                "detail": "Does a full build of OS161. Mapped to CTRL + SHIFT + B.",
+                "type": "shell",
+                "command": "./build.sh -p ${input:tree_path} -k ${input:kernel}",
+                "options": {
+                    "cwd": "${env:WORKSPACE_DIR}/scripts"
+                },
+                "problemMatcher": [],
+                "group": "build"
+            },
+            {
+                "label": "Clean Build",
+                "detail": "Restore the source tree to a pristine state and remove all generated files",
+                "type": "shell",
+                "command": "./clean_build.sh",
+                "options": {
+                    "cwd": "${env:WORKSPACE_DIR}/scripts"
+                },
+                "problemMatcher": []
+            },
+            {
+                "label": "Configure OS Tree",
+                "detail": "Configures the OS tree with the provided path",
+                "type": "shell",
+                "command": "./configure_os_tree.sh -p ${input:tree_path}",
+                "options": {
+                    "cwd": "${env:WORKSPACE_DIR}/scripts/build_helpers",
+                },
+                "problemMatcher": [],
+            },
+            {
+                "label": "Compile Userland",
+                "detail": "Compiles userland in src/",
+                "command": "./compile_userland.sh",
+                "type": "shell",
+                "options": {
+                    "cwd": "${env:WORKSPACE_DIR}/scripts/build_helpers",
+                },
+                "problemMatcher": [],
+            },
+            {
+                "label": "Configure and Compile Kernel",
+                "detail": "Configure and compile a specified kernel",
+                "command": "./configure_and_compile_kernel.sh -k ${input:kernel}",
+                "type": "shell",
+                "options": {
+                    "cwd": "${env:WORKSPACE_DIR}/scripts/build_helpers",
+                },
+                "problemMatcher": []
+            },
+        ],
+
+        // INPUT PARAMETERS TO TASKS
+        "inputs": [
+            {
+                "id": "tree_path",
+                "type": "promptString",
+                "description": "Path to source tree",
+                "default": "${env:WORKSPACE_DIR}/os161/root"
+            },
+            {
+                "id": "kernel",
+                "type": "pickString",
+                "description": "Selected kernel to configure",
+                "options": [
+                    "DUMBVM",
+                    "DUMBVM-OPT",
+                    "GENERIC",
+                    "GENERIC-OPT",
+                    "SYNCHPROBS"
+                ]
+            }
+        ]
+    }
+}

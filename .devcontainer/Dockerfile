@@ -49,17 +49,15 @@ ENV WORKSPACE_DIR=/workspace
 ENV OS161_DEPENDENCIES_DIR=/os161_dependencies
 ENV OS161_SRC=$WORKSPACE_DIR/os161/src
 
+# Add OS161 tools to PATH
+ENV PATH=${OS161_DEPENDENCIES_DIR}/tools/os161/bin:${OS161_DEPENDENCIES_DIR}/tools/sys161/bin:${PATH}
+
 # Set new user as the default user for the container
 USER $USERNAME
 
 # Copy config contents into home directory
 WORKDIR $HOME
 COPY --chown=${USERNAME}:${USERNAME} config .
-
-# Update .bashrc
-RUN chmod +x update-bashrc.sh \
-    && /bin/bash -c ${HOME}/update-bashrc.sh \
-    && rm ${HOME}/update-bashrc.sh
 
 # Set the default command to open a bash terminal
 CMD ["/bin/bash"]
