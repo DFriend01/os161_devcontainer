@@ -1,5 +1,5 @@
-# Use the official Ubuntu 18.04 base image
-FROM ubuntu:18.04
+# Use the official Ubuntu 22.04 base image
+FROM ubuntu:22.04
 
 # Install dependencies. Add any extra dependencies here.
 # Remove apt cache to reduce the bloat of image size.
@@ -19,7 +19,6 @@ RUN apt-get update && apt-get -y install \
         nodejs \
         ncurses-dev \
         openssh-client \
-        python-dev \
         sudo \
         tree \
         tmux \
@@ -29,10 +28,8 @@ RUN apt-get update && apt-get -y install \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Symbolic Links
-RUN ln -s /usr/bin/realpath /usr/bin/grealpath
-
 # Create a new user and give them sudo permissions without password
+# These might need to change if the UID and GID do not match the host user
 ARG UID=1000
 ARG GID=1000
 
