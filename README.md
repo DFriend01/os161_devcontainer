@@ -16,7 +16,7 @@ The devcontainer has been tested on WSL2.
 The devcontainer can be integrated with VS Code, but it can also be used with only the
 command line interface. Setup and run instructions will follow this section.
 
-The devcontainer uses Ubuntu 18.04 as the base image. From there, additional dependencies
+The devcontainer uses Ubuntu 22.04 as the base image. From there, additional dependencies
 are installed as part of the docker image. Docker virtualizes the operating system, meaning
 that when inside the devcontainer, it is almost like having the Ubuntu 18.04 OS installed
 on your machine (with some limitations).
@@ -106,6 +106,7 @@ git clone <REPO URL> src
     - Start by opening VS Code with `os161_devcontainer` as the project directory: `code os161_devcontainer`.
     - VS Code should prompt you to reopen in the devcontainer -- accept the prompt. If VS Code does not prompt
         you, then run the VS Code command `ctrl + shift + p` then `Dev Containers: Rebuild and Reopen in Container`.
+    - Open the `os161.code-workspace` file and click the "Open Workspace" button (you should see a purple border now)
     - To stop the devcontainer, just close VS Code.
 
     b. **With CLI**

@@ -5,7 +5,6 @@ BINUTILS161="binutils-2.24+os161-2.1"
 GCC161="gcc-4.8.3+os161-2.1"
 GDB161="gdb-7.8+os161-2.1"
 #MIRROR="http://www.eecs.harvard.edu/~dholland/os161/download"
-#MIRROR="http://www.ece.ubc.ca/~os161/download"
 MIRROR="https://people.ece.ubc.ca/~os161/download"
 
 #echo '*** Updating appliance ***'
@@ -34,6 +33,7 @@ PRE_CC=$CC
 PRE_CFLAGS=$CFLAGS
 CC=gcc
 CFLAGS=
+export CXXFLAGS=-std=gnu++11
 
 nproc=$(nproc)
 
@@ -68,7 +68,7 @@ echo '*** Building gdb ***'
 cd $GDB161
 find . -name '*.info' | xargs touch
 touch intl/plural.c
-./configure --target=mips-harvard-os161 --prefix=$HOME/tools/os161 --disable-werror --disable-sim 2>&1 | tee ../gdb.log
+./configure --target=mips-harvard-os161 --prefix=$HOME/tools/os161 --disable-werror --disable-sim --with-python=no 2>&1 | tee ../gdb.log
 make -j$nproc 2>&1 | tee -a ../gdb.log
 make install 2>&1 | tee -a ../gdb.log
 cd ..
@@ -77,6 +77,10 @@ rm -rf $GDB161
 
 echo '*** Building System/161 ***'
 cd $SYS161
+
+# Mark as extern to fix multiple definition error
+sed -i 's/uint64_t extra_selecttime;/extern uint64_t extra_selecttime;/' include/onsel.h
+
 ./configure --prefix=$HOME/tools/sys161 mipseb 2>&1 | tee ../sys161.log
 make -j$nproc 2>&1 | tee -a ../sys161.log
 make install 2>&1 | tee -a ../sys161.log
@@ -90,9 +94,10 @@ for file in *; do
 done
 cd ../..
 
-cd ~
-echo 'PATH=$HOME/tools/sys161/bin:$HOME/tools/os161/bin:$PATH' >> $HOME/.bashrc
-echo 'set path = ($path $HOME/tools/os161/bin $HOME/tools/sys161/bin)' >> $HOME/.cshrc
+# Paths are already set in Dockerfile
+# cd ~
+# echo 'PATH=$HOME/tools/sys161/bin:$HOME/tools/os161/bin:$PATH' >> $HOME/.bashrc
+# echo 'set path = ($path $HOME/tools/os161/bin $HOME/tools/sys161/bin)' >> $HOME/.cshrc
 
 CC=$PRE_CC
 CFLAGS=$PRE_CFLAGS
