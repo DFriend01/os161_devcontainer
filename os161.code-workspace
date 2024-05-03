@@ -173,7 +173,7 @@
                 "label": "Build",
                 "detail": "Does a full build of OS161. Mapped to CTRL + SHIFT + B.",
                 "type": "shell",
-                "command": "./build.sh -p ${input:tree_path} -k ${input:kernel}",
+                "command": "./build.sh -p ${env:WORKSPACE_DIR}/os161/root -k ${input:kernel}",
                 "options": {
                     "cwd": "${env:WORKSPACE_DIR}/scripts"
                 },
@@ -194,7 +194,7 @@
                 "label": "Configure OS Tree",
                 "detail": "Configures the OS tree with the provided path",
                 "type": "shell",
-                "command": "./configure_os_tree.sh -p ${input:tree_path}",
+                "command": "./configure_os_tree.sh -p ${env:WORKSPACE_DIR}/os161/root",
                 "options": {
                     "cwd": "${env:WORKSPACE_DIR}/scripts/build_helpers",
                 },
@@ -224,12 +224,6 @@
 
         // INPUT PARAMETERS TO TASKS
         "inputs": [
-            {
-                "id": "tree_path",
-                "type": "promptString",
-                "description": "Path to source tree",
-                "default": "${env:WORKSPACE_DIR}/os161/root"
-            },
             {
                 "id": "kernel",
                 "type": "pickString",
