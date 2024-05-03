@@ -5,3 +5,8 @@ os161/
 # Clangd
 .cache/
 compile_commands.json
+
+# Devcontainer config
+.devcontainer/config
+!.devcontainer/config/README
+!.devcontainer/config/.gdbinit
