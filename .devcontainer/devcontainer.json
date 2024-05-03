@@ -8,14 +8,14 @@
     "customizations": {
         "vscode": {
             "settings": {
-				"terminal.integrated.profiles.linux": {
-					"bash": {
-						"path": "bash",
-						"icon": "terminal-bash"
-					}
-				},
-				"terminal.integrated.defaultProfile.linux": "bash"
-			},
+                "terminal.integrated.profiles.linux": {
+                    "bash": {
+                        "path": "bash",
+                        "icon": "terminal-bash"
+                    }
+                },
+                "terminal.integrated.defaultProfile.linux": "bash"
+            },
 
             // Add vscode extensions here (the extension identifier)
             "extensions": [

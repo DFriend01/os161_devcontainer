@@ -1,6 +1,6 @@
-################################
-# Build the sys161 toolchain
-################################
+###############################
+# Build the os161 toolchain
+###############################
 FROM ubuntu:22.04 AS base
 
 # Install required dependencies for building toolchain
@@ -21,12 +21,19 @@ RUN apt-get update && apt-get -y install \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 ENV DEBIAN_FRONTEND=
 
-# Set environment variables. If you change these, also update docker-compose.yml accordingly.
-ENV WORKSPACE_DIR=/workspace
-ENV OS161_DEPENDENCIES_DIR=/os161_dependencies
-ENV OS161_SRC=$WORKSPACE_DIR/os161/src
+# Set environment variables
+ARG WORKSPACE_DIR
+ARG OS161_DEPENDENCIES_DIR
+ENV WORKSPACE_DIR=${WORKSPACE_DIR}
+ENV OS161_DEPENDENCIES_DIR=${OS161_DEPENDENCIES_DIR}
+ENV OS161_SRC=${WORKSPACE_DIR}/os161/src
 
-# TODO: Build sys161 toolchain inside the Dockerfile
+# Build os161 toolchain inside the Dockerfile
+COPY build_os161_toolchain.sh .
+RUN bash build_os161_toolchain.sh \
+    && mkdir -p ${OS161_DEPENDENCIES_DIR} \
+    && mv ${HOME}/tools ${OS161_DEPENDENCIES_DIR} \
+    && rm build_os161_toolchain.sh
 
 # Add OS161 tools to PATH
 ENV PATH=${OS161_DEPENDENCIES_DIR}/tools/os161/bin:${OS161_DEPENDENCIES_DIR}/tools/sys161/bin:${PATH}
@@ -50,21 +57,21 @@ RUN apt-get update && apt-get -y install \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Create a new user and give them sudo permissions without password
-# These might need to change if the UID and GID do not match the host user
-ARG UID=1000
-ARG GID=1000
+ARG UID
+ARG GID
+ARG USERNAME
 
-ENV USERNAME=osdev
-ENV HOME=/home/$USERNAME
-RUN groupadd --gid $GID $USERNAME \
-    && useradd -s /bin/bash --uid $UID --gid $GID -m $USERNAME && \
+ENV USERNAME=${USERNAME}
+ENV HOME=/home/${USERNAME}
+RUN groupadd --gid ${GID} ${USERNAME} \
+    && useradd -s /bin/bash --uid ${UID} --gid ${GID} -m ${USERNAME} && \
     echo "$USERNAME ALL=(root) NOPASSWD:ALL" >> /etc/sudoers
 
 # Set new user as the default user for the container
-USER $USERNAME
+USER ${USERNAME}
 
 # Copy config contents into home directory
-WORKDIR $HOME
+WORKDIR ${HOME}
 COPY --chown=${USERNAME}:${USERNAME} config .
 
 # Set the default command to open a bash terminal
