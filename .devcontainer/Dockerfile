@@ -1,6 +1,6 @@
-################################
-# Build the sys161 toolchain
-################################
+###############################
+# Build the os161 toolchain
+###############################
 FROM ubuntu:22.04 AS base
 
 # Install required dependencies for building toolchain
@@ -26,12 +26,12 @@ ENV WORKSPACE_DIR=/workspace
 ENV OS161_DEPENDENCIES_DIR=/os161_dependencies
 ENV OS161_SRC=$WORKSPACE_DIR/os161/src
 
-# Build sys161 toolchain inside the Dockerfile
-COPY cs161-ubuntu-darwin.sh .
-RUN bash cs161-ubuntu-darwin.sh \
+# Build os161 toolchain inside the Dockerfile
+COPY build_os161_toolchain.sh .
+RUN bash build_os161_toolchain.sh \
     && mkdir -p ${OS161_DEPENDENCIES_DIR} \
     && mv ${HOME}/tools ${OS161_DEPENDENCIES_DIR} \
-    && rm cs161-ubuntu-darwin.sh
+    && rm build_os161_toolchain.sh
 
 # Add OS161 tools to PATH
 ENV PATH=${OS161_DEPENDENCIES_DIR}/tools/os161/bin:${OS161_DEPENDENCIES_DIR}/tools/sys161/bin:${PATH}
