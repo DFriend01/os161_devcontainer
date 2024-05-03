@@ -43,7 +43,9 @@
         "[c]": {
             "editor.rulers": [80],
         },
-        
+
+        // Disable C/C++ extension intellisense so clangd intellisense works
+        "C_Cpp.intelliSenseEngine": "disabled",
     },
 
     // Launch configuration
