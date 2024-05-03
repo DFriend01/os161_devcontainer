@@ -22,6 +22,7 @@
                 "bierner.markdown-preview-github-styles",
                 "christian-kohler.path-intellisense",
                 "eamodio.gitlens",
+                "llvm-vs-code-extensions.vscode-clangd",
                 "ms-azuretools.vscode-docker",
                 "ms-vscode.cpptools",
                 "ms-vscode.live-server",

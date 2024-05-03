@@ -47,6 +47,8 @@ FROM base AS dev
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get -y install \
         bash-completion \
+        bear \
+        clangd \
         git \
         nodejs \
         openssh-client \
