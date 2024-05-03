@@ -5,6 +5,11 @@ services:
       context: .
       dockerfile: Dockerfile
       target: dev
+      args:
+        # The workspace directory must match the target in the bind volume below
+        WORKSPACE_DIR: /workspace
+        OS161_DEPENDENCIES_DIR: /os161_dependencies
+        USERNAME: osdev
     volumes:
       - type: bind
         source: ..
