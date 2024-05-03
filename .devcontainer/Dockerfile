@@ -1,29 +1,50 @@
-# Use the official Ubuntu 22.04 base image
-FROM ubuntu:22.04
+################################
+# Build the sys161 toolchain
+################################
+FROM ubuntu:22.04 AS base
 
-# Install dependencies. Add any extra dependencies here.
-# Remove apt cache to reduce the bloat of image size.
+# Install required dependencies for building toolchain
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get -y install \
+        bmake \
+        build-essential \
+        coreutils \
+        gdb \
+        gdbserver \
+        libmpc-dev \
+        ncurses-dev \
+        sudo \
+        vim \
+        wget \    
+    && apt-get autoremove -y \
+    && apt-get clean -y \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+ENV DEBIAN_FRONTEND=
+
+# Set environment variables. If you change these, also update docker-compose.yml accordingly.
+ENV WORKSPACE_DIR=/workspace
+ENV OS161_DEPENDENCIES_DIR=/os161_dependencies
+ENV OS161_SRC=$WORKSPACE_DIR/os161/src
+
+# TODO: Build sys161 toolchain inside the Dockerfile
+
+# Add OS161 tools to PATH
+ENV PATH=${OS161_DEPENDENCIES_DIR}/tools/os161/bin:${OS161_DEPENDENCIES_DIR}/tools/sys161/bin:${PATH}
+
+###############################################
+# Build the image used for the devcontainer
+###############################################
+FROM base AS dev
+
+# Install development dependencies
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get -y install \
         bash-completion \
-        bmake \
-        build-essential \
-        cmake \
-        coreutils \
         cscope \
-        emacs \
-        gdb \
-        gdbserver \
         git \
-        libmpc-dev \
         nodejs \
-        ncurses-dev \
         openssh-client \
-        sudo \
         tree \
-        tmux \
-        vim \
-        wget \    
     && apt-get autoremove -y \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
@@ -38,16 +59,6 @@ ENV HOME=/home/$USERNAME
 RUN groupadd --gid $GID $USERNAME \
     && useradd -s /bin/bash --uid $UID --gid $GID -m $USERNAME && \
     echo "$USERNAME ALL=(root) NOPASSWD:ALL" >> /etc/sudoers
-
-ENV DEBIAN_FRONTEND=
-
-# Set environment variables. If you change these, also update docker-compose.yml accordingly.
-ENV WORKSPACE_DIR=/workspace
-ENV OS161_DEPENDENCIES_DIR=/os161_dependencies
-ENV OS161_SRC=$WORKSPACE_DIR/os161/src
-
-# Add OS161 tools to PATH
-ENV PATH=${OS161_DEPENDENCIES_DIR}/tools/os161/bin:${OS161_DEPENDENCIES_DIR}/tools/sys161/bin:${PATH}
 
 # Set new user as the default user for the container
 USER $USERNAME
