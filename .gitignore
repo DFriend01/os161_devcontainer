@@ -1,3 +1,7 @@
 # Ignore OS161 source
 os161/
 !os161/root/sys161.conf
+
+# Clangd
+.cache/
+compile_commands.json

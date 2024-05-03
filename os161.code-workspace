@@ -46,6 +46,13 @@
 
         // Disable C/C++ extension intellisense so clangd intellisense works
         "C_Cpp.intelliSenseEngine": "disabled",
+
+        // Clangd configuration
+        "clangd.path": "/usr/bin/clangd",
+        "clangd.arguments": [
+            "--pretty",
+            "--compile-commands-dir=${env:WORKSPACE_DIR}"
+        ]
     },
 
     // Launch configuration
@@ -175,10 +182,7 @@
                 "label": "Build",
                 "detail": "Does a full build of OS161. Mapped to CTRL + SHIFT + B.",
                 "type": "shell",
-                "command": "./build.sh -p ${env:WORKSPACE_DIR}/os161/root -k ${input:kernel}",
-                "options": {
-                    "cwd": "${env:WORKSPACE_DIR}/scripts"
-                },
+                "command": "bear -- bash scripts/build.sh -p ${env:WORKSPACE_DIR}/os161/root -k ${input:kernel}",
                 "problemMatcher": [],
                 "group": "build"
             },
