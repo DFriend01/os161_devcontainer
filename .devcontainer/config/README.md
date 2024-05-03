@@ -10,8 +10,7 @@ the devcontainer. Instructions are below.
 
 Be sure to follow the instructions here to configure files in the home directory inside the devcontainer.
 Creating and/or editing any files within `/home/osdev` inside the devcontainer will not work because the home
-directory is not persisted as part of a docker volume. It would work temporarily, but you will lose any changes
-upon stopping the container.
+directory is not persisted. It would work temporarily, but you will lose any changes upon stopping the container.
 
 When any changes are made in the `config` directory, you will need to rebuild the docker container with
 the VS Code command `Dev Containers: Rebuild and Reopen in Container`. Observe that your dotfiles are
@@ -21,9 +20,3 @@ now populated in `/home/osdev`.
 
 Add your own dotfiles to the devcontainer simply by dropping them inside the `config` directory and
 rebuilding the devcontainer. Likewise for editing dotfiles.
-
-### Sys161 Config File
-
-The `sys161.conf` file is populated inside `/home/osdev` like the other config files.
-It will automatically be copied to `$WORKSPACE_DIR/os161/root` during the setup process.
-If a configuration file already exists inside the root directory, it will not be ovewritten.

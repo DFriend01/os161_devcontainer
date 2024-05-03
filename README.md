@@ -18,25 +18,19 @@ command line interface. Setup and run instructions will follow this section.
 
 The devcontainer uses Ubuntu 22.04 as the base image. From there, additional dependencies
 are installed as part of the docker image. Docker virtualizes the operating system, meaning
-that when inside the devcontainer, it is almost like having the Ubuntu 18.04 OS installed
+that when inside the devcontainer, it is almost like having the Ubuntu 22.04 distro installed
 on your machine (with some limitations).
 
 ### Persistent Storage
 
 Docker containers by themselves are incapable of having persisting storage. Once a container is stopped,
-the data inside is wiped. The devcontainer handles this issue by utilizing docker volumes, which
-allows persistent storage between multiple uses of the devcontainer. As is, there are two docker volumes
-that the devcontainer uses:
-
-1. The first is a [bind mount](https://docs.docker.com/storage/bind-mounts/) on the `os161_devcontainer` directory,
+the data inside is wiped. The devcontainer handles this issue by utilizing a bind mount.
+The [bind mount](https://docs.docker.com/storage/bind-mounts/) is mapped to the `os161_devcontainer` directory,
 which synchronizes everything inside this directory between the devcontainer and the user's host machine. 
 Changes made in the devcontainer are observed in the local host, and vice versa. The bind mount
-is mapped between the location of `os161_devcontainer` on your host machine, and the directory
+is mapped between the location of `os161_devcontainer` on your host machine and the directory
 specified by the environment variable `$WORKSPACE_DIR` inside the devcontainer.
 
-2. The second is a [named volume](https://docs.docker.com/storage/volumes/), which is used to persist the
-directory specified by the environment variable `$OS161_DEPENDENCIES_DIR` which persists the compiled OS161 tools to avoid 
-recompiling upon each rebuild of the docker container.
 
 > [!WARNING]
 > Any data that is not stored in `$WORKSPACE_DIR` or any of its subdirectories will be wiped out upon
@@ -106,6 +100,7 @@ git clone <REPO URL> src
     - Start by opening VS Code with `os161_devcontainer` as the project directory: `code os161_devcontainer`.
     - VS Code should prompt you to reopen in the devcontainer -- accept the prompt. If VS Code does not prompt
         you, then run the VS Code command `ctrl + shift + p` then `Dev Containers: Rebuild and Reopen in Container`.
+    - Wait for the devcontainer to build
     - Open the `os161.code-workspace` file and click the "Open Workspace" button (you should see a purple border now)
     - To stop the devcontainer, just close VS Code.
 
@@ -135,26 +130,13 @@ git clone <REPO URL> src
 > sometimes helps. You could also try restarting the docker daemon, but the troubleshooting steps may vary from
 > machine to machine.
 
-5. **Inside the devcontainer**, run the setup script:
-
-```
-cd $WORKSPACE_DIR/scripts
-./setup.sh
-```
-
-Alternativly, you can run the `Setup Workspace` VS Code task. See the section on
-[VS Code tasks](#vs-code-tasks).
-
-6. Confirm that the dependencies installed correctly by observing `which sys161` outputting
-a valid path. Also take a look at `$OS161_DEPENDENCIES_DIR/tools`.
-
-7. Build your kernel. You can either do it yourself following the
+5. Build your kernel. You can either do it yourself following the
 [instructions on the course website](https://people.ece.ubc.ca/~os161/os161-site/build-os161.html)
 or run the [build task](#vs-code-tasks).
 
 ## VS Code Tasks
 
-The devcontainer implements VS Code tasks. The task definitions are located in `.vscode/tasks.json`. Be sure to
+The devcontainer implements VS Code tasks. The task definitions are located in `os161.code-workspace`. Be sure to
 take a look at the tasks available, or even add your own!
 
 Run a VS Code task by:
@@ -162,7 +144,7 @@ Run a VS Code task by:
 - Selecting `Tasks: Run Task`
 - Selecting the desired task to run
 
-Performing a full build of the kernel is mapped to `ctrl + shif + b`, which is also the `Build` task.
+Performing a full build of the kernel is mapped to `ctrl + shift + b`, which is also the `Build` task.
 
 ## FAQs
 
@@ -182,19 +164,7 @@ cd $WORKSPACE_DIR
 
 ### Where are the OS161 tools stored?
 
-The OS161 tools are stored in `$OS161_DEPENDENCIES_DIR`. This directory is persisted in a docker volume,
-so any changes made to the tools (i.e. if you desire to add symbolic links), those are also persisted.
-
-### Will I need to run the setup script/task every time I start the devcontainer?
-
-No! You only need to run it when:
-
-- You are setting up the devcontainer for the first time; OR
-- You delete the docker named volume that contains the compiled OS161 tools; OR
-- You delete your `root` directory and/or your `sys161.conf` file
-
-The script does check to make sure whether each setup step inside the script is necessary or not,
-so there is no harm in running it again if you want to.
+The OS161 tools are stored in `$OS161_DEPENDENCIES_DIR`.
 
 ### How can I add my own dotfiles to the devcontainer?
 
@@ -208,5 +178,5 @@ task.
 
 ### How can I add my own VS Code tasks?
 
-Add your own tasks to the [tasks configuration file](.vscode/tasks.json). See the existing tasks
+Add your own tasks to the [workspace configuration file](os161.code-workspace). See the existing tasks
 as examples.
