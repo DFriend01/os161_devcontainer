@@ -57,9 +57,8 @@ RUN apt-get update && apt-get -y install \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Create a new user and give them sudo permissions without password
-# These might need to change if the UID and GID do not match the host user
-ARG UID=1000
-ARG GID=1000
+ARG UID
+ARG GID
 ARG USERNAME
 
 ENV USERNAME=${USERNAME}
