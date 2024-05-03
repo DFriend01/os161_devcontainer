@@ -168,18 +168,6 @@
                 ]
             },
 
-            // SETUP TASK
-            {
-                "label": "Setup Workspace",
-                "detail": "Compiles OS161 dependencies",
-                "type": "shell",
-                "command": "./setup.sh",
-                "options": {
-                    "cwd": "${env:WORKSPACE_DIR}/scripts"
-                },
-                "problemMatcher": []
-            },
-
             // BUILDING TASKS
             {
                 "label": "Build",
