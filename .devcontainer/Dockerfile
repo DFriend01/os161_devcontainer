@@ -26,7 +26,12 @@ ENV WORKSPACE_DIR=/workspace
 ENV OS161_DEPENDENCIES_DIR=/os161_dependencies
 ENV OS161_SRC=$WORKSPACE_DIR/os161/src
 
-# TODO: Build sys161 toolchain inside the Dockerfile
+# Build sys161 toolchain inside the Dockerfile
+COPY cs161-ubuntu-darwin.sh .
+RUN bash cs161-ubuntu-darwin.sh \
+    && mkdir -p ${OS161_DEPENDENCIES_DIR} \
+    && mv ${HOME}/tools ${OS161_DEPENDENCIES_DIR} \
+    && rm cs161-ubuntu-darwin.sh
 
 # Add OS161 tools to PATH
 ENV PATH=${OS161_DEPENDENCIES_DIR}/tools/os161/bin:${OS161_DEPENDENCIES_DIR}/tools/sys161/bin:${PATH}

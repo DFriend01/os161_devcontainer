@@ -9,7 +9,6 @@ services:
       - type: bind
         source: ..
         target: /workspace
-      - os161_tools:/os161_dependencies:delegated
     command: sleep infinity
 volumes:
   os161_tools:
