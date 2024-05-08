@@ -21,7 +21,7 @@ services:
         source: ..
         target: /workspace
       # Persist bash history
-      - os161-devcontainer-bashhistory:/commandhistory
+      - os161-devcontainer-bashhistory:/commandhistory:delegated
     command: sleep infinity
 volumes:
   os161-devcontainer-bashhistory:
