@@ -16,10 +16,13 @@ services:
         UID: 1000
         GID: 1000
     volumes:
+      # Mount source code
       - type: bind
         source: ..
         target: /workspace
+      # Persist bash history
+      - os161-devcontainer-bashhistory:/commandhistory
     command: sleep infinity
 volumes:
-  os161_tools:
+  os161-devcontainer-bashhistory:
     
