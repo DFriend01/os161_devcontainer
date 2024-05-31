@@ -68,11 +68,8 @@
             {
                 "name": "Run OS161",
                 "type": "node",
-                "request": "launch",
-                "preLaunchTask": "Run Kernel",
-
-                // Avoid going to debug console due to warnings about deprecated nodejs versioning
-                "internalConsoleOptions": "neverOpen"
+                "request": "attach",
+                "preLaunchTask": "Run Kernel"
             },
 
             // Documentation: https://code.visualstudio.com/docs/cpp/cpp-debug
@@ -111,6 +108,7 @@
         "version": "2.0.0",
 
         // See documentation: https://code.visualstudio.com/Docs/editor/tasks
+        // https://code.visualstudio.com/docs/editor/tasks-appendix
         "tasks": [
 
             // RUN AND DEBUG TASKS
@@ -190,30 +188,9 @@
                 "label": "Clean Build",
                 "detail": "Restore the source tree to a pristine state and remove all generated files",
                 "type": "shell",
-                "command": "bash scripts/clean_build.sh",
+                "command": "bash scripts/clean_build.sh && rm -f compile_commands.json",
                 "problemMatcher": []
-            },
-            {
-                "label": "Configure OS Tree",
-                "detail": "Configures the OS tree with the provided path",
-                "type": "shell",
-                "command": "bash scripts/build_helpers/configure_os_tree.sh -p ${env:WORKSPACE_DIR}/os161/root",
-                "problemMatcher": [],
-            },
-            {
-                "label": "Compile Userland",
-                "detail": "Compiles userland in src/",
-                "command": "bash scripts/build_helpers/compile_userland.sh",
-                "type": "shell",
-                "problemMatcher": [],
-            },
-            {
-                "label": "Configure and Compile Kernel",
-                "detail": "Configure and compile a specified kernel",
-                "command": "bash scripts/build_helpers/configure_and_compile_kernel.sh -k ${input:kernel}",
-                "type": "shell",
-                "problemMatcher": []
-            },
+            } 
         ],
 
         // INPUT PARAMETERS TO TASKS
