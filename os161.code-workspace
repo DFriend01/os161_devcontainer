@@ -68,11 +68,8 @@
             {
                 "name": "Run OS161",
                 "type": "node",
-                "request": "launch",
-                "preLaunchTask": "Run Kernel",
-
-                // Avoid going to debug console due to warnings about deprecated nodejs versioning
-                "internalConsoleOptions": "neverOpen"
+                "request": "attach",
+                "preLaunchTask": "Run Kernel"
             },
 
             // Documentation: https://code.visualstudio.com/docs/cpp/cpp-debug
