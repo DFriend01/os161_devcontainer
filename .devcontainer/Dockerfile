@@ -30,9 +30,8 @@ ENV OS161_SRC=${WORKSPACE_DIR}/os161/src
 
 # Build os161 toolchain inside the Dockerfile
 COPY build_os161_toolchain.sh .
-RUN bash build_os161_toolchain.sh \
-    && mkdir -p ${OS161_DEPENDENCIES_DIR} \
-    && mv ${HOME}/tools ${OS161_DEPENDENCIES_DIR} \
+RUN mkdir -p ${OS161_DEPENDENCIES_DIR} \
+    && bash build_os161_toolchain.sh -i ${OS161_DEPENDENCIES_DIR} \
     && rm build_os161_toolchain.sh
 
 # Add OS161 tools to PATH
