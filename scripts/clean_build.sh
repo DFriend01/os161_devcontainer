@@ -28,6 +28,9 @@ else
     echo "Cannot clean ${compile_directory}. It does not exist."
 fi
 
+# Clean compilation database
+rm -f "${WORKSPACE_DIR}/compile_commands.json"
+
 cd ${prev_dir}
 
 echo "Clean done!"
