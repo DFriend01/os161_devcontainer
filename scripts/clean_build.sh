@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 # Removes all generated files
 prev_dir=$(pwd)

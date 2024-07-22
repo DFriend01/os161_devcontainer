@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 function helpMessage() {
     echo "Usage: ./build.sh [OPTIONS]..."

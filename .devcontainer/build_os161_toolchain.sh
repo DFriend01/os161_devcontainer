@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 SYS161="sys161-2.0.3"
 BINUTILS161="binutils-2.24+os161-2.1"
