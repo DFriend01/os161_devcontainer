@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 # Removes all generated files
 prev_dir=$(pwd)
@@ -27,6 +27,9 @@ if [[ -d ${compile_directory} ]]; then
 else
     echo "Cannot clean ${compile_directory}. It does not exist."
 fi
+
+# Clean compilation database
+rm -f "${WORKSPACE_DIR}/compile_commands.json"
 
 cd ${prev_dir}
 

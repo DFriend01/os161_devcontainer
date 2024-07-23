@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 function helpMessage() {
     echo "Usage: ./configure_and_compile_kernel.sh [OPTIONS]..."

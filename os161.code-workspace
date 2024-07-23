@@ -188,7 +188,7 @@
                 "label": "Clean Build",
                 "detail": "Restore the source tree to a pristine state and remove all generated files",
                 "type": "shell",
-                "command": "bash scripts/clean_build.sh && rm -f compile_commands.json",
+                "command": "bash scripts/clean_build.sh",
                 "problemMatcher": []
             } 
         ],

@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 # Most of the devcontainer is configured to use the "default" directory,
 # so it's advised to not change it unless you really want to change it

@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 function helpMessage() {
     echo "Usage: ./compile_userland.sh"
