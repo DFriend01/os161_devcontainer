@@ -38,7 +38,8 @@ ENV PATH=${OS161_DEPENDENCIES_DIR}/tools/os161/bin:${OS161_DEPENDENCIES_DIR}/too
 ###############################################
 # Build the image used for the devcontainer
 ###############################################
-FROM base AS dev
+ARG DEVCONTAINER_BASE_IMAGE
+FROM ${DEVCONTAINER_BASE_IMAGE} AS dev
 
 # Install development dependencies
 ENV DEBIAN_FRONTEND=noninteractive
