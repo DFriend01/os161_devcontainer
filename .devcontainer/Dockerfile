@@ -8,6 +8,17 @@ ARG DEVCONTAINER_BASE_IMAGE
 ###############################
 FROM ubuntu:22.04 AS base
 
+ENV RELEASE="1.3.0"
+
+LABEL org.opencontainers.image.authors="devon.friend45@gmail.com"
+LABEL org.opencontainers.image.url="https://github.com/DFriend01/os161_devcontainer"
+LABEL org.opencontainers.image.documentation="https://github.com/DFriend01/os161_devcontainer/wiki"
+LABEL org.opencontainers.image.source="https://github.com/DFriend01/os161_devcontainer/blob/main/.devcontainer/Dockerfile"
+LABEL org.opencontainers.image.licenses="MIT"
+LABEL org.opencontainers.image.title="OS161 Base Image"
+LABEL org.opencontainers.image.description="A basic environment for developing OS161"
+LABEL org.opencontainers.image.version=${RELEASE}
+
 # Install required dependencies for building toolchain
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get -y install \
@@ -34,7 +45,9 @@ ENV OS161_SRC=${WORKSPACE_DIR}/os161/src
 # Build os161 toolchain inside the Dockerfile
 COPY build_os161_toolchain.sh .
 RUN mkdir -p ${OS161_DEPENDENCIES_DIR} \
-    && bash build_os161_toolchain.sh -i ${OS161_DEPENDENCIES_DIR} \
+    && bash build_os161_toolchain.sh \
+        -i ${OS161_DEPENDENCIES_DIR} \
+        -m "https://github.com/DFriend01/os161_devcontainer/releases/download/${RELEASE}" \
     && rm build_os161_toolchain.sh
 
 # Add OS161 tools to PATH
