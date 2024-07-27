@@ -1,4 +1,9 @@
 ###############################
+# Dockerfile Arguments
+###############################
+ARG DEVCONTAINER_BASE_IMAGE
+
+###############################
 # Build the os161 toolchain
 ###############################
 FROM ubuntu:22.04 AS base
@@ -22,10 +27,8 @@ RUN apt-get update && apt-get -y install \
 ENV DEBIAN_FRONTEND=
 
 # Set environment variables
-ARG WORKSPACE_DIR
-ARG OS161_DEPENDENCIES_DIR
-ENV WORKSPACE_DIR=${WORKSPACE_DIR}
-ENV OS161_DEPENDENCIES_DIR=${OS161_DEPENDENCIES_DIR}
+ENV WORKSPACE_DIR="/workspace"
+ENV OS161_DEPENDENCIES_DIR="/os161_dependencies"
 ENV OS161_SRC=${WORKSPACE_DIR}/os161/src
 
 # Build os161 toolchain inside the Dockerfile
@@ -40,7 +43,7 @@ ENV PATH=${OS161_DEPENDENCIES_DIR}/tools/os161/bin:${OS161_DEPENDENCIES_DIR}/too
 ###############################################
 # Build the image used for the devcontainer
 ###############################################
-FROM base AS dev
+FROM ${DEVCONTAINER_BASE_IMAGE} AS dev
 
 # Install development dependencies
 ENV DEBIAN_FRONTEND=noninteractive

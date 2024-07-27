@@ -6,10 +6,9 @@ services:
       dockerfile: Dockerfile
       target: dev
       args:
-        # The workspace directory must match the target in the bind volume below
-        # and the workspace folder in devcontainer.json (not recommended to change this)
-        WORKSPACE_DIR: /workspace
-        OS161_DEPENDENCIES_DIR: /os161_dependencies
+        # Change image to "base" to build the base image locally for development
+        # or if the container repo does not support your platform
+        DEVCONTAINER_BASE_IMAGE: ghcr.io/dfriend01/os161_devcontainer/base:latest
         USERNAME: osdev
         # These might need to change if the UID and GID do not match the host user
         # Check UID with `id -u <username>` and GID with `id -g <username>`
