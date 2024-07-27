@@ -1,4 +1,9 @@
 ###############################
+# Dockerfile Arguments
+###############################
+ARG DEVCONTAINER_BASE_IMAGE
+
+###############################
 # Build the os161 toolchain
 ###############################
 FROM ubuntu:22.04 AS base
@@ -38,7 +43,6 @@ ENV PATH=${OS161_DEPENDENCIES_DIR}/tools/os161/bin:${OS161_DEPENDENCIES_DIR}/too
 ###############################################
 # Build the image used for the devcontainer
 ###############################################
-ARG DEVCONTAINER_BASE_IMAGE
 FROM ${DEVCONTAINER_BASE_IMAGE} AS dev
 
 # Install development dependencies

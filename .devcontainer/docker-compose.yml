@@ -6,6 +6,8 @@ services:
       dockerfile: Dockerfile
       target: dev
       args:
+        # Change image to "base" to build the base image locally for development
+        # or if the container repo does not support your platform
         DEVCONTAINER_BASE_IMAGE: ghcr.io/os161_devcontainer_base:latest
         USERNAME: osdev
         # These might need to change if the UID and GID do not match the host user
